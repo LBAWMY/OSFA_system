@@ -9,12 +9,12 @@ One-Surgical-Four-Arms system for robotic-assisted hysterectomy. This repository
 ### Hardware
 
 * **Robotics:** UR5 Robot Arm, Uterus Manipulator, Surgical Tools (1–4).
-* **Vision:** 2x Stereo Cameras, 4x Tripods, 12x9x5 Checkerboard.
-* **Control:** Computer (Ubuntu), Joystick, Phantom, Ruler.
+* **Vision:** Stereo Laparoscope, 12x9x5 Checkerboard (Hand-eye and stereo Calibration).
+* **Control:** Computer (Ubuntu), Joystick, Low-level Controller.
 
 ### Software
 
-* **Framework:** ROS Melodic / Python 3.
+* **Framework:** ROS Melodic / Python 3.8.
 * **Vision:** YOLOv5 (Stereo matching and monocular tracking).
 * **Calibration:** OpenCV (Python) and MATLAB Camera Calibrator.
 
