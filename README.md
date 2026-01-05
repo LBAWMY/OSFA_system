@@ -138,5 +138,3 @@ kill -9 $(ps -ef | grep main.py | grep -v grep | awk '{print $2}')
 **Note:** If `joint_states` shows no data, restart the UR5 hardware control box and re-run the bringup launch.
 
 ---
-
-**Next Step:** Would you like me to generate a specific `cadaver_tools.yaml` template for your YOLO training configuration?
