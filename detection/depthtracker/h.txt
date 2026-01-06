@@ -1,0 +1,1002 @@
+ 1005  cd ~/catkin_ws/ ** catkin_make -DCATKIN_WHITELIST_PACKAGES="rectImage_predDepth"
+ 1006  cd ~/catkin_ws/ && catkin_make -DCATKIN_WHITELIST_PACKAGES="rectImage_predDepth"
+ 1007  rosmsg show rectImage_predDepth/ImageDepth
+ 1008  source devel/setup.bash
+ 1009  rosmsg show rectImage_predDepth/ImageDepth
+ 1010  cd ~/catkin_ws/ && catkin_make -DCATKIN_WHITELIST_PACKAGES="rectImage_predDepth"
+ 1011  source devel/setup.bash
+ 1012  rosmsg show rectImage_predDepth/ImageDepth
+ 1013  cd build
+ 1014  cmake ..
+ 1015  make -j8
+ 1016  cmake ..
+ 1017  make -j8
+ 1018  cmake ..
+ 1019  make -j8
+ 1020  ./img_sub 
+ 1021  cmake ..
+ 1022  make -j8
+ 1023  cmake ..
+ 1024  make -j8
+ 1025  ./img_sub 
+ 1026  cmake ..
+ 1027  make -j8
+ 1028  ./img_sub 
+ 1029  cmake ..
+ 1030  make -j8
+ 1031  ./img_sub 
+ 1032  cmake ..
+ 1033  make -j8
+ 1034  cmake ..
+ 1035  make -j8
+ 1036  ./img_sub 
+ 1037  cmake ..
+ 1038  make -j8
+ 1039  ./img_sub 
+ 1040  cd ..
+ 1041  catkin_make
+ 1042  base
+ 1043  conda activate aanet
+ 1044  history
+ 1045  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_sceneflow-5aa5a24e.pth
+ 1046  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_sceneflow-5aa5a24e.pth
+ 1047  base
+ 1048  conda activate aanet
+ 1049  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_sceneflow-5aa5a24e.pth
+ 1050  source ~/catkin_ws/devel/setup.bash 
+ 1051  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_sceneflow-5aa5a24e.pth
+ 1052  base
+ 1053  conda activate aanet
+ 1054  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_sceneflow-5aa5a24e.pth
+ 1055  python
+ 1056  base
+ 1057  conda activate aanet
+ 1058  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_sceneflow-5aa5a24e.pth
+ 1059  base
+ 1060  conda activate aanet
+ 1061  python
+ 1062  touch imagedepth.msg
+ 1063  catkin_create_pkg rectimg_preddepth
+ 1064  cd rectimg_preddepth/
+ 1065  mkdir ms
+ 1066  rm -rf ms
+ 1067  mkdir msg
+ 1068  source devel/setup.bash 
+ 1069  python
+ 1070  python3
+ 1071  base
+ 1072  python
+ 1073  conda activate aanet
+ 1074  python
+ 1075  rosmsg show rectImage_predDepth/ImageDepth
+ 1076  rosmsg show optical_flow_coarse2fine/CommonOpticalFlow
+ 1077  rosmsg show optical_flow_coarse2fine/src/CommonOpticalFlow
+ 1078  rosmsg show optical_flow_coarse2fine/CommOpticalFlow
+ 1079  rosmsg show rectImage_predDepth/ImageDepth
+ 1080  base
+ 1081  conda activate aanet
+ 1082  python
+ 1083  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_sceneflow-5aa5a24e.pth
+ 1084  base
+ 1085  conda activate aanet
+ 1086  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_sceneflow-5aa5a24e.pth
+ 1087  conda deactivate
+ 1088  python
+ 1089  python3
+ 1090  catkin_make
+ 1091  source devel/setup.bash 
+ 1092  catkin_make
+ 1093  catkin_make -DCATKIN_WHITELIST_PACKAGES="rectimg_preddepth"
+ 1094  source devel/setup.bash 
+ 1095  rosmsg show rectimg_preddpeth/ImageDepth
+ 1096  catkin_make -DCATKIN_WHITELIST_PACKAGES="rectimg_preddepth"
+ 1097  source devel/setup.bash 
+ 1098  rosmsg show rectimg_preddpeth/ImageDepth
+ 1099  catkin_make
+ 1100  rosmsg show rectimg_preddpeth/ImageDepth
+ 1101  source devel/setup.bash 
+ 1102  rosmsg show rectimg_preddpeth/ImageDepth
+ 1103  rosmsg show rectimg_preddpeth/imagedepth
+ 1104  source devel/setup.bash 
+ 1105  rosmsg show rectimg_preddpeth/imagedepth
+ 1106  catkin_make
+ 1107  source devel/setup.bash 
+ 1108  rosmsg show rectimg_preddpeth/imagedepth
+ 1109  catkin_make -DCATKIN_WHITELIST_PACKAGES="rectimg_preddepth"
+ 1110  source devel/setup.bash 
+ 1111  rosmsg show rectimg_preddpeth/imagedepth
+ 1112  source ~/.bashrc
+ 1113  rosmsg show rectimg_preddpeth/imagedepth
+ 1114  catkin_make -DCATKIN_WHITELIST_PACKAGES="rectimg_preddepth"
+ 1115  rosmsg show rectimg_preddpeth/imagedepth
+ 1116  source devel/setup.bash 
+ 1117  rosmsg show rectimg_preddpeth/imagedepth
+ 1118  rosmsg show rectimg_preddepth/imagedepth
+ 1119  python
+ 1120  python3
+ 1121  catkin_make
+ 1122  rosmsg show rectImage_predDepth/ImageDepth
+ 1123  source devel/setup.bash 
+ 1124  rosmsg show rectImage_predDepth/ImageDepth
+ 1125  ls al
+ 1126  ls -al
+ 1127  sudo vim .bashrc
+ 1128  source .bashrc
+ 1129  rostopic list
+ 1130  python
+ 1131  gedit start_eth.sh 
+ 1132  ./start_eth.sh 
+ 1133  cd build
+ 1134  cmake ..
+ 1135  make -j8
+ 1136  cmake ..
+ 1137  make -j8
+ 1138  cmake ..
+ 1139  make -j8
+ 1140  cmake ..
+ 1141  make -j8
+ 1142  cmake ..
+ 1143  make -j8
+ 1144  cmake ..
+ 1145  make -j8
+ 1146  ls
+ 1147  ./img_sub 
+ 1148  cmake ..
+ 1149  make -j8
+ 1150  ./img_sub 
+ 1151  cmake ..
+ 1152  make -j8
+ 1153  ./img_sub 
+ 1154  cmake ..
+ 1155  make -j8
+ 1156  ./img_sub 
+ 1157  cmake ..
+ 1158  ./img_sub 
+ 1159  make -j8
+ 1160  ./img_sub 
+ 1161  cmake ..
+ 1162  make -j8
+ 1163  ./img_sub 
+ 1164  cmake ..
+ 1165  make -j8
+ 1166  ./img_sub 
+ 1167  cmake ..
+ 1168  make -j8
+ 1169  ./img_sub 
+ 1170  cmake ..
+ 1171  make -j8
+ 1172  cmake ..
+ 1173  make -j8
+ 1174  ./img_sub 
+ 1175  cmake ..
+ 1176  make -j8
+ 1177  ./img_sub 
+ 1178  cmake ..
+ 1179  make -j8
+ 1180  cmake ..
+ 1181  make -j8
+ 1182  cmake ..
+ 1183  make -j8
+ 1184  cmake ..
+ 1185  make -j8
+ 1186  cmake ..
+ 1187  make -j8
+ 1188  cmake ..
+ 1189  make -j8
+ 1190  cmake ..
+ 1191  make -j8
+ 1192  cmake ..
+ 1193  make -j8
+ 1194  cmake ..
+ 1195  make -j8
+ 1196  cmake ..
+ 1197  make -j8
+ 1198  cmake ..
+ 1199  make -j8
+ 1200  cmake ..
+ 1201  make -j8
+ 1202  cmake ..
+ 1203  make -j8
+ 1204  cmake ..
+ 1205  make -j8
+ 1206  ./img_sub 
+ 1207  cmake ..
+ 1208  make -j8
+ 1209  ./img_sub 
+ 1210  cmake ..
+ 1211  make -j8
+ 1212  ./img_sub 
+ 1213  cmake ..
+ 1214  make -j8
+ 1215  ./img_sub 
+ 1216  cmake ..
+ 1217  make -j8
+ 1218  ./img_sub 
+ 1219  cmake ..
+ 1220  make -j8
+ 1221  ./img_sub 
+ 1222  cmake ..
+ 1223  make -j8
+ 1224  ./img_sub 
+ 1225  cmake ..
+ 1226  make -j8
+ 1227  ./img_sub 
+ 1228  cmake ..
+ 1229  make -j8
+ 1230  ./img_sub 
+ 1231  cmake ..
+ 1232  make -j8
+ 1233  ./img_sub 
+ 1234  python3 main.py 
+ 1235  rostopic echo /ur_driver/URScript
+ 1236  history
+ 1237  rostopic lsit
+ 1238  rostopic list
+ 1239  rostopic echo /joint_states
+ 1240  history
+ 1241  roslaunch ur_modern_driver ur5_bringup.launch robot_ip:=192.168.3.33
+ 1242  nvidia-smi
+ 1243  python
+ 1244  cd build
+ 1245  cmake ..
+ 1246  make -j8
+ 1247  ./img_sub 
+ 1248  cmake ..
+ 1249  make -j8
+ 1250  ./img_sub 
+ 1251  cmake ..
+ 1252  make -j8
+ 1253  ./img_sub 
+ 1254  cmake ..
+ 1255  make -j8
+ 1256  ./img_sub 
+ 1257  cmake ..
+ 1258  make -j8
+ 1259  cmake ..
+ 1260  make -j8
+ 1261  cmake ..
+ 1262  make -j8
+ 1263  ./img_sub 
+ 1264  cmake ..
+ 1265  make -j8
+ 1266  ./img_sub 
+ 1267  cmake ..
+ 1268  make -j8
+ 1269  ./img_sub 
+ 1270  cmake ..
+ 1271  make -j8
+ 1272  cmake ..
+ 1273  make -j8
+ 1274  cmake ..
+ 1275  make -j8
+ 1276  cmake ..
+ 1277  make -j8
+ 1278  ./img_sub 
+ 1279  nvidia-smi
+ 1280  jupyter notebook
+ 1281  base
+ 1282  jupyter notebook
+ 1283  conda activate robodepth
+ 1284  jupyter notebook
+ 1285  base
+ 1286  conda activate robodepth
+ 1287  jupyter notebook
+ 1288  matlab
+ 1289  git clone https://github.com/uber-research/DeepPruner.git
+ 1290  conda create -n deeppruner python=2.7
+ 1291  base
+ 1292  conda create -n deeppruner python=2.7
+ 1293  conda activate deeppruner
+ 1294  conda install pytorch=0.4.1 cuda90 -c pytorch
+ 1295  conda install torchvision=0.2.1
+ 1296  conda install tensorboardX
+ 1297  pip install tensorboardX
+ 1298  pip install scikit-image
+ 1299  pip install opencv-python
+ 1300  pip install --upgrade pip
+ 1301  pip install opencv-python
+ 1302  conda install opencv=3.3.1
+ 1303  ipython
+ 1304  python
+ 1305  cd DeepPruner/
+ 1306  cd deeppruner/
+ 1307  CUDA_VISIBLE_DEVICES python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar --save_dir ./disparity/ --datapath ./image/kitti/ 
+ 1308  CUDA_VISIBLE_DEVICES=1 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar --save_dir ./disparity/ --datapath ./image/kitti/ 
+ 1309  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar
+ 1310  pip install yaml
+ 1311  conda install yaml
+ 1312  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar
+ 1313  pip install pyyaml
+ 1314  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar
+ 1315  pip install catkin_pkg
+ 1316  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar
+ 1317  pip install opencv-python
+ 1318  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar
+ 1319  CUDA_VISIBLE_DEVICES=1 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar --save_dir ./depth/ --datapath ./image/ur5_laparo/ 
+ 1320  CUDA_VISIBLE_DEVICES=1 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar --save_dir ./disparity/ --datapath ./image/ur5_laparo/
+ 1321  CUDA_VISIBLE_DEVICES=1 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar --save_dir ./depth/ --datapath ./image/kitti/
+ 1322  python
+ 1323  CUDA_VISIBLE_DEVICES=1 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar --save_dir ./disparity/ --datapath ./image/ur5_laparo/
+ 1324  CUDA_VISIBLE_DEVICES=1 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar --save_dir ./depth/ --datapath ./image/ur5_laparo/
+ 1325  CUDA_VISIBLE_DEVICES=1 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-sceneflow.tar --save_dir ./depth/ --datapath ./image/ur5_laparo/
+ 1326  CUDA_VISIBLE_DEVICES=1 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar --save_dir ./depth/serv-ct_kitti --datapath ./image/serv-ct/SERV-CT-ALL/Experiment_1
+ 1327  CUDA_VISIBLE_DEVICES=1 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar --save_dir ./depth/experiment_2/kitti/ --datapath ./image/serv-ct/SERV-CT-ALL/Experiment_2
+ 1328  CUDA_VISIBLE_DEVICES=1 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-sceneflow.tar --save_dir ./depth/experiment_2/scene_flow/ --datapath ./image/serv-ct/SERV-CT-ALL/Experiment_2
+ 1329  CUDA_VISIBLE_DEVICES=1 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-sceneflow.tar --save_dir ./depth/experiment_1/scene_flow/ --datapath ./image/serv-ct/SERV-CT-ALL/Experiment_1
+ 1330  CUDA_VISIBLE_DEVICES=1 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar --save_dir ./depth/miccai/ --datapath ./image/miccai/
+ 1331  CUDA_VISIBLE_DEVICES=2 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar --save_dir ./depth/miccai/ --datapath ./image/miccai/
+ 1332  nvidia-smi
+ 1333  CUDA_VISIBLE_DEVICES=2 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-kitti.tar --save_dir ./depth/miccai/ --datapath ./image/miccai/
+ 1334  CUDA_VISIBLE_DEVICES=2 python submission_kitti.py --loadmodel ./pretrained/DeepPruner-best-sceneflow.tar --save_dir ./depth/miccai_sce/ --datapath ./image/miccai/
+ 1335  base
+ 1336  conda activate monodepth2
+ 1337  ipython
+ 1338  ipyton
+ 1339  ipython
+ 1340  history
+ 1341  rosrun
+ 1342  rosrun rviz rviz
+ 1343  rosmsg show rectimg_preddepth/imagedepth
+ 1344  history
+ 1345  touch stereo_depth_estimation.py
+ 1346  conda activate aanet
+ 1347  base
+ 1348  conda activate aanet
+ 1349  history
+ 1350  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1351  base
+ 1352  conda activate aanet
+ 1353  python real_time_depth_estimation.py 
+ 1354  history
+ 1355  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_sceneflow-5aa5a24e.pth
+ 1356  history
+ 1357  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1358  CUDA_VISIBLE_DEVICES=1 0ython real_time_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1359  CUDA_VISIBLE_DEVICES=0 python real_time_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1360  cd ../..
+ 1361  ls
+ 1362  cd stereo_depth_estimation/
+ 1363  ls
+ 1364  cd stereo-transformer/
+ 1365  ls
+ 1366  conda deactivate
+ 1367  conda activate sttr
+ 1368  python real_time_depth_estimation.py 
+ 1369  cd ../aanet/
+ 1370  conda deactivate
+ 1371  conda activate aanet
+ 1372  CUDA_VISIBLE_DEVICES=0 python real_time_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1373  history
+ 1374  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1375  CUDA_VISIBLE_DEVICES=1 python restereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1376  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1377  history
+ 1378  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_sceneflow-5aa5a24e.pth
+ 1379  history
+ 1380  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_kitti15-fb2a0d23.pth --no_intermediate_supervision
+ 1381  CUDA_VISIBLE_DEVICES=1 python restereo_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_kitti15-fb2a0d23.pth --no_intermediate_supervision
+ 1382  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_kitti15-fb2a0d23.pth --no_intermediate_supervision
+ 1383  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimion.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1384  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1385  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_kitti15-fb2a0d23.pth --no_intermediate_supervision
+ 1386  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_sceneflow-5aa5a24e.pth
+ 1387  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_sceneflow-d3e13ef0.pth 
+ 1388  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti12-56157808.pth 
+ 1389  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_kitti12-e20bb24d.pth 
+ 1390  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti12-56157808.pth 
+ 1391  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_kitti15-fb2a0d23.pth --no_intermediate_supervision
+ 1392  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1393  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti12-56157808.pth 
+ 1394  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_sceneflow-5aa5a24e.pth
+ 1395  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1396  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_kitti15-fb2a0d23.pth --no_intermediate_supervision
+ 1397  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1398  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_kitti15-fb2a0d23.pth --no_intermediate_supervision
+ 1399  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1400  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_kitti15-fb2a0d23.pth --no_intermediate_supervision
+ 1401  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1402  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --feature_pyramid_network --feature_type aanet --pretrained_aanet pretrained/aanet_kitti15-fb2a0d23.pth --no_intermediate_supervision
+ 1403  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1404  base
+ 1405  conda activate robodepth
+ 1406  python vs_mask_realtime.py 
+ 1407  CUDA_VISIBLE_DEVICES=1 python vs_mask_realtime.py 
+ 1408  base
+ 1409  conda activate robodepth
+ 1410  CUDA_VISIBLE_DEVICES=2 python real_time_templeta_depth_estimation.py 
+ 1411  CUDA_VISIBLE_DEVICES=2 python real_time_tool_depth_estimation.py 
+ 1412  history
+ 1413  CUDA_VISIBLE_DEVICES=2 python real_time_templeta_depth_estimation.py 
+ 1414  sudo chmod -R 777 yolo-train/
+ 1415  sudo chmod -R 777 yolo-test/
+ 1416  catkin_make
+ 1417  sudo vim ~/.bashrc
+ 1418  source ~/.bashrc
+ 1419  sudo vim ~/.bashrc
+ 1420  source ~/.bashrc
+ 1421  python
+ 1422  ./start_eth.sh 
+ 1423  cmake ../src
+ 1424  make -j8
+ 1425  history
+ 1426  ./ElasticFusion -l ../cal_1_new.txt
+ 1427  ./ElasticFusion -l ../cal_1_new.txt -f 1
+ 1428  cmake ../src
+ 1429  cmake ..src
+ 1430  cmake ../src
+ 1431  make -j8
+ 1432  ./ElasticFusion -l ../cal_1_new.txt -f 1
+ 1433  cmake ..
+ 1434  cmake ../src
+ 1435  make -j8
+ 1436  ./ElasticFusion -l ../cal_1_new.txt -f 1
+ 1437  cd build
+ 1438  cmake ..
+ 1439  make -j8
+ 1440  cmake ..
+ 1441  make -j8
+ 1442  cmake ..
+ 1443  make -j8
+ 1444  cmake ..
+ 1445  make -j8
+ 1446  ./img_sub 
+ 1447  cmake ..
+ 1448  make -j8
+ 1449  ./img_sub 
+ 1450  cmake ..
+ 1451  make -j8
+ 1452  ./img_sub
+ 1453  cmake ..
+ 1454  make -j8
+ 1455  ./img_sub 
+ 1456  cmake ..
+ 1457  make -j8
+ 1458  ./img_sub 
+ 1459  cmake ..
+ 1460  make -j8
+ 1461  ./img_sub 
+ 1462  cmake ..
+ 1463  make -j8
+ 1464  ./img_sub 
+ 1465  cmake ..
+ 1466  make -j8
+ 1467  ./img_sub 
+ 1468  cmake ..
+ 1469  make -j8
+ 1470  ./img_sub 
+ 1471  make -j8
+ 1472  ./img_sub 
+ 1473  cmake ..
+ 1474  make -j8
+ 1475  ./img_sub 
+ 1476  cmake ..
+ 1477  make -j8
+ 1478  ./img_sub 
+ 1479  cmake ..
+ 1480  make -j8
+ 1481  ./img_sub 
+ 1482  cmake ..
+ 1483  make -j8
+ 1484  ./img_sub 
+ 1485  cmake ..
+ 1486  make -j8
+ 1487  ./img_sub 
+ 1488  cmake ..
+ 1489  make -j8
+ 1490  cmake ..
+ 1491  make -j8
+ 1492  ./img_sub 
+ 1493  cmake ..
+ 1494  make -j8
+ 1495  ./img_sub 
+ 1496  cmake ..
+ 1497  make -j8
+ 1498  ./img_sub 
+ 1499  cmake e..
+ 1500  cmake ..
+ 1501  make -j8
+ 1502  ./img_sub 
+ 1503  make -j8
+ 1504  ./i
+ 1505  ./img_sub 
+ 1506  make -j8
+ 1507  ./img_sub 
+ 1508  make -j8
+ 1509  ./img_sub 
+ 1510  make -j8
+ 1511  ./img_sub 
+ 1512  make -j8
+ 1513  ./img_sub 
+ 1514  make -j8
+ 1515  cmake ..
+ 1516  make -j8
+ 1517  ./img_sub 
+ 1518  make -j8
+ 1519  ./img_sub 
+ 1520  make -j8
+ 1521  ./img_sub 
+ 1522  make -j8
+ 1523  ./img_sub 
+ 1524  make -j8
+ 1525  ./img_sub 
+ 1526  make -j8
+ 1527  ./img_sub 
+ 1528  make -j8
+ 1529  ./img_sub 
+ 1530  make -j8
+ 1531  ./img_sub 
+ 1532  make -j8
+ 1533  ./img_sub 
+ 1534  make -j8
+ 1535  ./img_sub 
+ 1536  make -j8
+ 1537  ./img_sub 
+ 1538  make -j8
+ 1539  ./img_sub 
+ 1540  make -j8
+ 1541  ./img_sub 
+ 1542  make -j8
+ 1543  ./img_sub 
+ 1544  make -j8
+ 1545  ./img_sub 
+ 1546  bg
+ 1547  history
+ 1548  catkin_make
+ 1549  sudo vim ~/.bashrc
+ 1550  source ~/.bashrc
+ 1551  sudo vim ~/.bashrc
+ 1552  source ~/.bashrc
+ 1553  python
+ 1554  cd build
+ 1555  cmake ..
+ 1556  make -j8
+ 1557  ./img_sub 
+ 1558  make -j8
+ 1559  ./img_sub 
+ 1560  make -j8
+ 1561  ./img_sub 
+ 1562  make -j8
+ 1563  ./img_sub 
+ 1564  make -j8
+ 1565  ./img_sub 
+ 1566  make -j8
+ 1567  ./img_sub 
+ 1568  make -j8
+ 1569  ./img_sub 
+ 1570  make -j8
+ 1571  ./img_sub 
+ 1572  make -j8
+ 1573  ./img_sub 
+ 1574  make -j8
+ 1575  ./img_sub 
+ 1576  make -j8
+ 1577  ./img_sub 
+ 1578  make -j8
+ 1579  ./img_sub 
+ 1580  make -j8
+ 1581  ./img_sub 
+ 1582  make -j8
+ 1583  ./img_sub 
+ 1584  make -j8
+ 1585  ./img_sub 
+ 1586  make -j8
+ 1587  ./img_sub 
+ 1588  make -j8
+ 1589  ./img_sub 
+ 1590  make -j8
+ 1591  ./img_sub 
+ 1592  make -j8
+ 1593  ./img_sub 
+ 1594  cmake ..
+ 1595  make -j8
+ 1596  ./img_sub 
+ 1597  make -j8
+ 1598  ./img_sub 
+ 1599  make -j8
+ 1600  ./img_sub 
+ 1601  make -j8
+ 1602  ./img_sub 
+ 1603  make -j8
+ 1604  ./img_sub 
+ 1605  make -j8
+ 1606  ./img_sub 
+ 1607  cmake ..
+ 1608  make -j8
+ 1609  ./img_sub 
+ 1610  make -j8
+ 1611  ./img_sub 
+ 1612  cmake ..
+ 1613  make -j8
+ 1614  ./img_sub 
+ 1615  cmake ..
+ 1616  make -j8
+ 1617  ./img_sub 
+ 1618  watch -n 5 nvidia-smi
+ 1619  base
+ 1620  conda activate aanet
+ 1621  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1622  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1623  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1624  CUDA_VISIBLE_DEVICES=0 python real_time_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1625  CUDA_VISIBLE_DEVICES=1 python real_time_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1626  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1627  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --feature_pyramid --refinement_type hourglass --no_intermediate_supervision --feature_type ganet --pretrained_aanet pretrained/aanet+_kitti15-2075aea1.pth
+ 1628  cd build
+ 1629  cmake ../src
+ 1630  make -j8
+ 1631  cd ../..
+ 1632  cd GUI
+ 1633  cd build
+ 1634  cmake ../src
+ 1635  make -j8
+ 1636  gst-launch-1.0 v4l2src device=/dev/video0 ! videoconvert ! videoscale ! video/x-raw, width=1920, height=1080, format=YV12 ! xvimagesink
+ 1637  v4l2-ctl -d /dev/video1 -i 1
+ 1638  v4l2-ctl -d /dev/video0 -i 1
+ 1639  nvidia-smi
+ 1640  htop
+ 1641  nvidia-smi
+ 1642  cd build/
+ 1643  cmake ../src
+ 1644  make -j8
+ 1645  cmake ../src
+ 1646  make -j8
+ 1647  ./ElasticFusion -cal ../cal_1_new.txt 
+ 1648  cmake ..
+ 1649  cmake ../src
+ 1650  make -j8
+ 1651  ./ElasticFusion -cal ../cal_1_new.txt 
+ 1652  ./ElasticFusion -cal ../cal_1_new.txt -f
+ 1653  CUDA_VISIBLE_DEVICES=2 ./ElasticFusion -cal ../cal_1_new.txt -f
+ 1654  CUDA_VISIBLE_DEVICES=1 ./ElasticFusion -cal ../cal_1_new.txt -f
+ 1655  ./ElasticFusion -cal ../cal_1_new.txt -f
+ 1656  optirun
+ 1657  ./ElasticFusion -cal ../cal_1_new.txt -f
+ 1658  ./ElasticFusion -cal ../cal_1_new.txt -f -ie 5e-4
+ 1659  ./ElasticFusion -cal ../cal_1_new.txt -f -ie 5e-6 -cv 1e-04
+ 1660  ./ElasticFusion -cal ../cal_1_new.txt -f -ie 5e-6
+ 1661  ./ElasticFusion -cal ../cal_1_new.txt -f -ie 5e-6 -cv 1e-04
+ 1662  ./ElasticFusion -cal ../cal_1_new.txt -f -ie 5e-6 -cv 1e-04 -pt 200
+ 1663  ./ElasticFusion -cal ../cal_1_new.txt -f -ie 5e-6 -cv 1e-04
+ 1664  ./ElasticFusion -cal ../cal_1_new.txt -f -ie 5e-6 -cv 1e-04 -ft 0.5
+ 1665  ./ElasticFusion -cal ../cal_1_new.txt -f -ie 5e-6
+ 1666  ./ElasticFusion -cal ../cal_1_new.txt -f -rl
+ 1667  ./ElasticFusion -cal ../cal_1_new.txt -f -ie 4e-05
+ 1668  ./ElasticFusion -cal ../cal_1_new.txt -f -ie 6e-05
+ 1669  ./ElasticFusion -cal ../cal_1_new.txt -f -ie 6e-05
+ 1670  ./ElasticFusion -cal ../cal_1_new.txt -f -ftf -c 5
+ 1671  ./ElasticFusion -cal ../cal_1_new.txt -f -ftf -c 5 -icp 60
+ 1672  ./ElasticFusion -cal ../cal_1_new.txt -f -ftf -c 3 -icp 60
+ 1673  ./ElasticFusion -cal ../cal_1_new.txt -f -ftf -c 3
+ 1674  ./ElasticFusion -cal ../cal_1_new.txt -f -ftf -c 5
+ 1675  touch stereo_camera.cpp
+ 1676  rm -rf stereo_camera.cpp 
+ 1677  touch stereo_camera_node.cpp
+ 1678  touch CMakeLists.txt
+ 1679  mkdir build
+ 1680  cd build
+ 1681  cmake ..
+ 1682  make -j8
+ 1683  ./stereo_camera_node 
+ 1684  cmake ..
+ 1685  make -j8
+ 1686  cmake ..
+ 1687  make -j8
+ 1688  ./stereo_camera_node 
+ 1689  cmake ..
+ 1690  make -j8
+ 1691  ./stereo_camera_node 
+ 1692  cmake ..
+ 1693  make -j8
+ 1694  cmake ..
+ 1695  make -j8
+ 1696  ./stereo_camera_node 
+ 1697  cmake ..
+ 1698  make -j8
+ 1699  ./stereo_camera_node 
+ 1700  cmake ..
+ 1701  make -j8
+ 1702  ./stereo_camera_node 
+ 1703  cmake ..
+ 1704  make -j8
+ 1705  ./stereo_camera_node 
+ 1706  cmake ..
+ 1707  make -j8
+ 1708  ./stereo_camera_node
+ 1709  cmake ..
+ 1710  make -j8
+ 1711  ./stereo_camera_node 
+ 1712  cmake ..
+ 1713  make -j8
+ 1714  ./stereo_camera_node 
+ 1715  cmake ..
+ 1716  make -j8
+ 1717  ./stereo_camera_node 
+ 1718  cmake ..
+ 1719  make -j8
+ 1720  ./stereo_camera_node 
+ 1721  cmake ..
+ 1722  make -j8
+ 1723  ./stereo_camera_node 
+ 1724  cmake ..
+ 1725  make -j8
+ 1726  ./stereo_camera_node 
+ 1727  cmake ..
+ 1728  make -j8
+ 1729  ./stereo_camera_node 
+ 1730  cmake ..
+ 1731  make -j8
+ 1732  ./stereo_camera_node 
+ 1733  cmake ..
+ 1734  make -j8
+ 1735  ./stereo_camera_node 
+ 1736  cmake ..
+ 1737  make -j8
+ 1738  ./stereo_camera_node 
+ 1739  cmake ..
+ 1740  make -j8
+ 1741  ./stereo_camera_node 
+ 1742  cmake ..
+ 1743  make -j8
+ 1744  ./stereo_camera_node 
+ 1745  cmake ..
+ 1746  make -j8
+ 1747  cmake ..
+ 1748  make -j8
+ 1749  cmake ..
+ 1750  make -j8
+ 1751  ./stereo_camera_node 
+ 1752  mkdir build
+ 1753  cd build
+ 1754  cmake ..
+ 1755  cmake
+ 1756  ps -aux
+ 1757  ps -A
+ 1758  top
+ 1759  ps aux | less
+ 1760  kill -9 21804
+ 1761  cmake ..
+ 1762  make -j8
+ 1763  ./stereo_camera_node 
+ 1764  cmake ..
+ 1765  make -j8
+ 1766  ./stereo_camera_node 
+ 1767  cmake ..
+ 1768  make -j8
+ 1769  ./stereo_camera_node 
+ 1770  cmake ..
+ 1771  make -j8
+ 1772  ./stereo_camera_node 
+ 1773  cmake ..
+ 1774  make -j8
+ 1775  ./stereo_camera_node 
+ 1776  cmake ..
+ 1777  make -j8
+ 1778  ./stereo_camera_node 
+ 1779  cmake ..
+ 1780  make -j8
+ 1781  ./stereo_camera_node 
+ 1782  cmake ..
+ 1783  make -j8
+ 1784  ./stereo_camera_node 
+ 1785  cmake ..
+ 1786  make -j8
+ 1787  ./stereo_camera_node 
+ 1788  cmake ..
+ 1789  make -j8
+ 1790  ./stereo_camera_node 
+ 1791  ps -aux | less
+ 1792  cmake-gui
+ 1793  clion
+ 1794  base
+ 1795  conda activate robodepth
+ 1796  python real_time_templeta_depth_estimation.py 
+ 1797  python real_time_resize_templete_depth_estimation.py 
+ 1798  ps -aux | less
+ 1799  kill -9 13585
+ 1800  ps -aux | less
+ 1801  kill -9 469
+ 1802  kill -9 9437
+ 1803  mkdir build
+ 1804  cd build
+ 1805  cmake ..
+ 1806  make -j8
+ 1807  git clone https://github.com/gengshan-y/high-res-stereo.git
+ 1808  conda create -n hsm python=3.6.8
+ 1809  base
+ 1810  conda create -n hsm python=3.6.8
+ 1811  conda activate hsm
+ 1812  conda install pytorch=0.4.1 torchvision=0.2.1 cuda92 -c pytorch
+ 1813  pip install tensorboardX==1.4
+ 1814  pip install opencv-python
+ 1815  pip install texttable
+ 1816  pip install matplotlib
+ 1817  CUDA_VISIBLE_DEVICES=1 python submission.py --datapath ./data-mbtest/   --outdir ./mboutput --loadmodel ./weights/final-768px.tar  --testres 1 --clean 1.0 --max_disp -1
+ 1818  cd ..
+ 1819  cd stereo_depth_estimation/
+ 1820  cd high-res-stereo/
+ 1821  CUDA_VISIBLE_DEVICES=1 python submission.py --datapath ./data-mbtest/   --outdir ./mboutput --loadmodel ./weights/final-768px.tar  --testres 1 --clean 1.0 --max_disp -1
+ 1822  pip install skimage
+ 1823  pip install scikit-image
+ 1824  CUDA_VISIBLE_DEVICES=1 python submission.py --datapath ./data-mbtest/   --outdir ./mboutput --loadmodel ./weights/final-768px.tar  --testres 1 --clean 1.0 --max_disp -1
+ 1825  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/final-768px.tar  --testres 1 --clean 1.0 --max_disp 480
+ 1826  CUDA_VISIBLE_DEVICES=0 python stereo_depth_estimation.py --loadmodel ./weights/final-768px.tar  --testres 1 --clean 1.0 --max_disp 480
+ 1827  nvidia-smi
+ 1828  CUDA_VISIBLE_DEVICES=0 python stereo_depth_estimation.py --loadmodel ./weights/final-768px.tar  --testres 1 --clean 1.0 --max_disp 480
+ 1829  CUDA_VISIBLE_DEVICES=0 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0 --max_disp 480
+ 1830  CUDA_VISIBLE_DEVICES=0 1ython stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0 --max_disp 480
+ 1831  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0 --max_disp 480
+ 1832  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/final-768px.tar  --testres 1 --clean 1.0 --max_disp 480
+ 1833  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0 --max_disp 480
+ 1834  CUDA_VISIBLE_DEVICES=1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0 --max_disp 480
+ 1835  CUDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0 --max_disp 480
+ 1836  CUDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0 --max_disp 600
+ 1837  CUDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0 --max_disp 500
+ 1838  UDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0 --max_disp 1000
+ 1839  UDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0 --max_disp 1920
+ 1840  UDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 2.0 --max_disp 1920
+ 1841  UDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 2.0 --max_disp 1920
+ 1842  UDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 2.0 --max_disp 480
+ 1843  UDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 1.0 --max_disp 480
+ 1844  UDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 0.5 --max_disp 480
+ 1845  UDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0 --level 3 --max_disp 480
+ 1846  UDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.5  --max_disp 480
+ 1847  UDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 480
+ 1848  UDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.5  --max_disp 480
+ 1849  UDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 480
+ 1850  UDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 480
+ 1851  UDA_VISIBLE_DEVICES=1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 480
+ 1852  UDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 480
+ 1853  CUDA_VISIBLE_DEVICES=1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 480
+ 1854  CUDA_VISIBLE_DEVICES=0,1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 480
+ 1855  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 480
+ 1856  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 800
+ 1857  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 1200
+ 1858  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 3000
+ 1859  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 2500
+ 1860  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 5000
+ 1861  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 1200
+ 1862  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 800
+ 1863  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 1  --max_disp 800
+ 1864  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 800
+ 1865  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 480
+ 1866  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 1200
+ 1867  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 192
+ 1868  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 480
+ 1869  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 1  --max_disp 480
+ 1870  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 0.5  --max_disp 480
+ 1871  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 1.5  --max_disp 480
+ 1872  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.5  --max_disp 480
+ 1873  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0  --max_disp 480
+ 1874  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0  --max_disp 480
+ 1875  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.8 --clean 1.0  --max_disp 480
+ 1876  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 1.0  --max_disp 480
+ 1877  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0  --max_disp 480
+ 1878  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 2 --clean 1.0  --max_disp 480
+ 1879  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0  --max_disp 480
+ 1880  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.0  --max_disp 1200
+ 1881  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 2  --max_disp 1200
+ 1882  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 2  --max_disp 1200
+ 1883  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 2  --max_disp 1920
+ 1884  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 3  --max_disp 1920
+ 1885  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 2  --max_disp 1200
+ 1886  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 2  --max_disp 1200
+ 1887  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.8 --clean 2  --max_disp 1200
+ 1888  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.8 --clean 2  --max_disp 5000
+ 1889  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 0.5 --clean 2  --max_disp 5000
+ 1890  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 2  --max_disp 5000
+ 1891  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 5000
+ 1892  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 800
+ 1893  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 480
+ 1894  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1895  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 480
+ 1896  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 384
+ 1897  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1898  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 384
+ 1899  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1900  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 384
+ 1901  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1902  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 192
+ 1903  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1904  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 384
+ 1905  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1906  CUDA_VISIBLE_DEVICES=1 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1907  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1908  CUDA_VISIBLE_DEVICES=1,2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1909  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1910  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.5  --max_disp 512
+ 1911  base
+ 1912  conda activate hsm
+ 1913  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1.5  --max_disp 512
+ 1914  sudo vim ~/.bashrc
+ 1915  source ~/.bashrc
+ 1916  sudo vim ~/.bashrc
+ 1917  ipcpnfig
+ 1918  ipconfig
+ 1919  ip
+ 1920  ./start_eth.sh 
+ 1921  nvidia-smi
+ 1922  watch -n 5nvidia-smi
+ 1923  watch -n 5 nvidia-smi
+ 1924  ls
+ 1925  ipconfig -a
+ 1926  ifconfig -a
+ 1927  ping baidu.com
+ 1928  cat /etc/resolv.conf
+ 1929  ifconfig
+ 1930  ./start_eth.sh 
+ 1931  gcc -v
+ 1932  matlab
+ 1933  base
+ 1934  matlab
+ 1935  ls
+ 1936  cd ..
+ 1937  ls
+ 1938  cd ..
+ 1939  ls
+ 1940  history
+ 1941  sudo vim ~/.bashrc
+ 1942  source ~/.bashrc
+ 1943  cd /media/
+ 1944  cd f
+ 1945  ls
+ 1946  fdisk -l
+ 1947  sudo fdisk -l
+ 1948  sudo mount /dev/sda /media/f
+ 1949  ls
+ 1950  cd /media/f
+ 1951  ls
+ 1952  sudo /usr/local/MATLAB/R2018b/bin/matlab
+ 1953  sudo gedit pub_camflow.m 
+ 1954  touch optical_flow_tracking.py
+ 1955  python3 optical_flow_tracking.py 
+ 1956  python optical_flow_tracking.py 
+ 1957  python3 optical_flow_tracking.py 
+ 1958  base
+ 1959  conda activate hsm
+ 1960  python3 optical_flow_tracking.py 
+ 1961  python optical_flow_tracking.py 
+ 1962  python
+ 1963  conda deactivate
+ 1964  python3 optical_flow_tracking.py 
+ 1965  python
+ 1966  cd build
+ 1967  ./stereo_camera_node 
+ 1968  python3 dense_optical_flow_tracking.py 
+ 1969  python3 optical_flow_tracking.py 
+ 1970  python3 dense_optical_flow_tracking.py 
+ 1971  roscore
+ 1972  sudo vim ~/.bashrc
+ 1973  source ~/.bashrc
+ 1974  roscore
+ 1975  gst-launch-1.0 v4l2src device=/dev/video0 ! videoconvert ! videoscale ! video/x-raw, width=1920, height=1080, format=YV12 ! xvimagesink
+ 1976  v4l2-ctl -d /dev/video1 -i 1
+ 1977  v4l2-ctl -d /dev/video0 -i 1
+ 1978  gst-launch-1.0 v4l2src device=/dev/video0 ! videoconvert ! videoscale ! video/x-raw, width=1920, height=1080, format=YV12 ! xvimagesink
+ 1979  cd PycharmProjects/AutomaticCameraControlTask/
+ 1980  python3 stero_camera_node.py 
+ 1981  roscore
+ 1982  v4l2-ctl -d /dev/video1 -i 1
+ 1983  v4l2-ctl -d /dev/video0 -i 1
+ 1984  gst-launch-1.0 v4l2src device=/dev/video0 ! videoconvert ! videoscale ! video/x-raw, width=1920, height=1080, format=YV12 ! xvimagesink
+ 1985  sudo /usr/local/MATLAB/R2018b/bin/matlab
+ 1986  sudo vim ~/.bashrc
+ 1987  source .bashrc
+ 1988  sudo vim ~/.bashrc
+ 1989  source .bashrc
+ 1990  sudo vim ~/.bashrc
+ 1991  source .bashrc
+ 1992  roscore
+ 1993  history
+ 1994  sudo vim ~/.bashrc
+ 1995  source .bashrc
+ 1996  sudo fdisk -l
+ 1997  sudo mount /dev/sda /media/f
+ 1998  sudo chmod 777 tianyu/
+ 1999  base
+ 2000  conda env list
+ 2001  conda activate yolov5
+ 2002  python yolo_track_multi.py 
+ 2003  history
+ 2004  history > h.txt
+ CUDA_VISIBLE_DEVICES=1 python3 yolo_track_five_tools_merge_advanced_L_fast.py --weights ../yolov5/runs/train/exp32/weights/best.pt --conf 0.25 --classes 2 4 6 10 14 --view-img --agnostic-nms
+

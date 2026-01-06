@@ -1,0 +1,1000 @@
+ 1003  cd media
+ 1004  ls
+ 1005  cd f
+ 1006  ls
+ 1007  ifconfig -a
+ 1008  service sshd restart
+ 1009  vi /etc/ssh/sshd_config
+ 1010  sudo vi /etc/ssh/sshd_config
+ 1011  service sshd restart
+ 1012  su ziyi
+ 1013  python3 video_to_sequence.py 
+ 1014  touch intrinsics.txt
+ 1015  sudo vim .bashrc
+ 1016  source .bashrc
+ 1017  gst-launch-1.0 v4l2src device=/dev/video0 ! videoconvert ! videoscale ! video/x-raw, width=1920, height=1080, format=YV12 ! xvimagesink
+ 1018  v4l2-ctl -d /dev/video1 -i 1
+ 1019  v4l2-ctl -d /dev/video0 -i 1
+ 1020  gst-launch-1.0 v4l2src device=/dev/video0 ! videoconvert ! videoscale ! video/x-raw, width=1920, height=1080, format=YV12 ! xvimagesink
+ 1021  history
+ 1022  sudo vim .bashrc
+ 1023  source .bashrc
+ 1024  conda activate py37torch
+ 1025  conda activate yolov5
+ 1026  python3
+ 1027  ls
+ 1028  df -h
+ 1029  blkid
+ 1030  blkid /dev/sda
+ 1031  blkid
+ 1032  fdisk -l
+ 1033  df -h
+ 1034  mount /dev/sda /media/f/
+ 1035  sudo su
+ 1036  ./stereo_camera_node 
+ 1037  ls -ltrh /dev/video*
+ 1038  cheese /dev/video0
+ 1039  cheese /dev/video1
+ 1040  ls -ltrh /dev/video*
+ 1041  cheese /dev/video2
+ 1042  cheese /dev/video3
+ 1043  sudo apt-get install cheese
+ 1044  ls -ltrh /dev/video*
+ 1045  cheese /dev/video3
+ 1046  sudo apt-get install v4l-utils
+ 1047  v4l2-ctl --list-devices
+ 1048  v4l2-ctl -d /dev/video0 --list-formats
+ 1049  cheese
+ 1050  ls -ltrh /dev/video*
+ 1051  cheese /dev/video3
+ 1052  cheese /dev/video2
+ 1053  cd '/home/trs-server/PycharmProjects/uterus_gui_pure/detectioln_gui' 
+ 1054  cd track/
+ 1055  python yolo_track_multi_ziyi_pure.py  --weights ../yolov5/runs/train/exp11/weights/best.py --conf 0.25 --classes 1 3 --view-img
+ 1056  python yolo_track_multi_merge.py  --weights ../yolov5/runs/train/exp11/weights/best.py --conf 0.25 --classes 1 3 --view-img
+ 1057  cd '/home/trs-server/PycharmProjects/uterus_gui_pure/detectioln_gui/detection/depthtracker' 
+ 1058  python yolo_track_multi_merge.py  --weights ../yolov5/runs/train/exp11/weights/best.py --conf 0.25 --classes 1 3 --view-img
+ 1059  python yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1060  conda activate yolov5
+ 1061  sudo conda activate yolov5
+ 1062  conda activate py37torch
+ 1063  conda activate yolov5
+ 1064  conda info --envs
+ 1065  vim ~/.bashrc
+ 1066  rostopic list
+ 1067  ls
+ 1068  rostopic list
+ 1069  rostopic echo /pred_position_aux
+ 1070  cmake-gui
+ 1071  gedit ~/.bashrc
+ 1072  base
+ 1073  conda activate yolov5
+ 1074  python yolo_track_multi.py --weights ../yolov5/runs/train/exp10/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1075  python yolo_track_multi_ziyi.py --weights ../yolov5/runs/train/exp10/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1076  python yolo_track_multi_ziyi.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1077  python yolo_track_multi.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1078  python yolo_track_multi_ziyi.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1079  python yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1080  cd '/home/trs-server/PycharmProjects/uterus_gui_pure/detectioln_gui/detection/depthtracker' 
+ 1081  python yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1082  cd '/home/trs-server/PycharmProjects/uterus_gui_pure/detectioln_gui/detection/depthtracker' 
+ 1083  python yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1084  cd '/home/trs-server/PycharmProjects/uterus_gui_pure/detectioln_gui/detection/depthtracker' 
+ 1085  python yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1086  python yolo_track_multi_pure.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1087  python
+ 1088  rviz
+ 1089  vi /etc/ssh/sshd_config
+ 1090  sudo vim /etc/ssh/sshd_config 
+ 1091  sudo service ssh reload
+ 1092  vi /etc/ssh/sshd_config
+ 1093  service ssh reload
+ 1094  sudo apt-get install libmrpt-dev
+ 1095  base
+ 1096  conda activate hsm
+ 1097  history
+ 1098  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1099  cmake ..
+ 1100  make
+ 1101  history
+ 1102  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_0/
+ 1103  ./StaticFusion-ImageSeqAssoc ../test_data/ball/
+ 1104  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_0/
+ 1105  cmake ..
+ 1106  make
+ 1107  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_0/
+ 1108  cmake ..
+ 1109  make
+ 1110  cmake ..
+ 1111  make
+ 1112  ./StaticFusion-ImageSeqAssoc ../test_data/ball/
+ 1113  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_0/
+ 1114  cmake ..
+ 1115  make
+ 1116  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_0/
+ 1117  cmake ..
+ 1118  make
+ 1119  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_0/
+ 1120  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_1/
+ 1121  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_2/
+ 1122  ./StaticFusion-ImageSeqAssoc ../test_data/ball/
+ 1123  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_2/
+ 1124  ./StaticFusion-ImageSeqAssoc ../test_data/ball/
+ 1125  ls
+ 1126  ./StaticFusion-Datasets ../test_data/rawlog_rgbd_dataset_freiburg3_walking_xyz/rgbd_dataset_freiburg3_walking_xyz.rawlog 
+ 1127  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_1/
+ 1128  cmake ..
+ 1129  make
+ 1130  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_1/
+ 1131  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_2/
+ 1132  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_0/
+ 1133  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_1/
+ 1134  cmake ..
+ 1135  make
+ 1136  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_1/
+ 1137  cmake ..
+ 1138  make
+ 1139  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_1/
+ 1140  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_2/
+ 1141  cmake ..
+ 1142  make
+ 1143  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_1/
+ 1144  cmake ..
+ 1145  make
+ 1146  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_1/
+ 1147  cmake ..
+ 1148  make
+ 1149  cmake ..
+ 1150  make
+ 1151  cmake ..
+ 1152  make
+ 1153  cmake ..
+ 1154  make
+ 1155  ls
+ 1156  ./StaticFusion-Camera 
+ 1157  cmake ..
+ 1158  make
+ 1159  ./StaticFusion-Camera 
+ 1160  cmake ..
+ 1161  make
+ 1162  ./StaticFusion-Camera 
+ 1163  cmake ..
+ 1164  make
+ 1165  ./StaticFusion-Camera 
+ 1166  cmake ..
+ 1167  make
+ 1168  ./StaticFusion-Camera 
+ 1169  cmake ..
+ 1170  make
+ 1171  ./StaticFusion-Camera 
+ 1172  cmake ..
+ 1173  make
+ 1174  ./StaticFusion-Camera 
+ 1175  cmake ..
+ 1176  make
+ 1177  ./StaticFusion-Camera 
+ 1178  rm -rf build
+ 1179  mkdir build && cd build
+ 1180  cmake ..
+ 1181  make
+ 1182  cmake ..
+ 1183  make
+ 1184  ./StaticFusion-Camera 
+ 1185  cmake ..
+ 1186  make
+ 1187  cmake ..
+ 1188  make
+ 1189  ./StaticFusion-Camera 
+ 1190  sudo vim /etc/fstab
+ 1191  sudo vim /etc/fstab 
+ 1192  mount -a
+ 1193  suod mount -a
+ 1194  sudo mount -a
+ 1195  sudo fdisk -l
+ 1196  df -h
+ 1197  sudo blkid /dev/sda
+ 1198  cd /media
+ 1199  ls
+ 1200  cd f
+ 1201  ls
+ 1202  cd ..
+ 1203  cd e
+ 1204  ls
+ 1205  cd ..
+ 1206  sudo vim /etc/fstab 
+ 1207  sudo mount -a
+ 1208  sudo reboot
+ 1209  ls -ls /dev/disk/by-uuid/
+ 1210  sudo fdisk -l
+ 1211  blkid
+ 1212  ls -ls /dev/disk/by-id/
+ 1213  ls -ls /dev/disk/by-partuuid/
+ 1214  sudo blkid /dev/sda
+ 1215  sudo vim /etc/fstab 
+ 1216  sudo mount -a
+ 1217  sudo reboot
+ 1218  cd /media/f
+ 1219  ls
+ 1220  cd ruofeng/
+ 1221  ls
+ 1222  history
+ 1223  ./StaticFusion-ImageSeqAssoc ../test_data/ball/
+ 1224  cd /media./StaticFusion-Datasets ../test_data/rawlog_rgbd_dataset_freiburg3_walking_xyz/rgbd_dataset_freiburg3_walking_xyz.rawlog
+ 1225  ./StaticFusion-Datasets ../test_data/rawlog_rgbd_dataset_freiburg3_walking_xyz/rgbd_dataset_freiburg3_walking_xyz.rawlog
+ 1226  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_2/
+ 1227  nvidia-smi
+ 1228  sudo reboot
+ 1229  mkdir wrf
+ 1230  ls -al
+ 1231  cd ..
+ 1232  ls -al
+ 1233  cd e
+ 1234  ls -al
+ 1235  sudo mkdir test
+ 1236  cd ..
+ 1237  sudo chmod 777 -R e/
+ 1238  cd e/
+ 1239  ls
+ 1240  sudo mkdir test1
+ 1241  sudo gedit /etc/fstab 
+ 1242  mount -a
+ 1243  sudo mount -a
+ 1244  sudo reboot
+ 1245  sudo fdisk -l
+ 1246  df -h
+ 1247  history
+ 1248  df -l
+ 1249  fdisk -l
+ 1250  sudo fdisk -l
+ 1251  sudo mount /dev/sda /media/e/
+ 1252  sudo mkfs -t ext4 /dev/sda
+ 1253  sudo mount /dev/sda /media/e/
+ 1254  historyy
+ 1255  history
+ 1256  ls -ls /dev/disk/by-uuid/
+ 1257  python3 main_wrf.py 
+ 1258  history
+ 1259  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_2/
+ 1260  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_0/
+ 1261  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_1/
+ 1262  base
+ 1263  conda env list
+ 1264  cmake ..
+ 1265  make
+ 1266  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_0/
+ 1267  cmake ..
+ 1268  make
+ 1269  cmake
+ 1270  cmake ..
+ 1271  make
+ 1272  ./StaticFusion-Camera 
+ 1273  cmake ..
+ 1274  make
+ 1275  ./StaticFusion-Camera 
+ 1276  cmake ..
+ 1277  make
+ 1278  ./StaticFusion-Camera 
+ 1279  make
+ 1280  ./StaticFusion-Camera 
+ 1281  cmake ..
+ 1282  make
+ 1283  ./StaticFusion-Camera 
+ 1284  cmake ..
+ 1285  make
+ 1286  ./StaticFusion-Camera 
+ 1287  history
+ 1288  cmake ..
+ 1289  make
+ 1290  ls
+ 1291  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_0
+ 1292  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_1
+ 1293  cmake ..
+ 1294  make
+ 1295  cmake ..
+ 1296  make
+ 1297  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_1
+ 1298  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_0
+ 1299  cmake ..
+ 1300  make
+ 1301  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_0
+ 1302  cmake ..
+ 1303  make
+ 1304  cmake ..
+ 1305  make
+ 1306  ./StaticFusion-Camera 
+ 1307  cmake ..
+ 1308  make
+ 1309  ./StaticFusion-Camera 
+ 1310  cmake ..
+ 1311  make
+ 1312  ./StaticFusion-Camera 
+ 1313  cmake ..
+ 1314  make
+ 1315  ./StaticFusion-Camera 
+ 1316  cmake ..
+ 1317  make
+ 1318  ./StaticFusion-Camera 
+ 1319  cmake ..
+ 1320  make
+ 1321  ./StaticFusion-Camera 
+ 1322  cmake ..
+ 1323  make
+ 1324  ./StaticFusion-Camera 
+ 1325  make
+ 1326  ./StaticFusion-Camera 
+ 1327  make
+ 1328  ./StaticFusion-Camera 
+ 1329  make
+ 1330  ./StaticFusion-Camera 
+ 1331  make
+ 1332  ./StaticFusion-Camera 
+ 1333  cmake ..
+ 1334  make
+ 1335  ./StaticFusion-Camera 
+ 1336  cmake ..
+ 1337  make
+ 1338  ./StaticFusion-Camera 
+ 1339  make
+ 1340  ./StaticFusion-Camera 
+ 1341  cmake ..
+ 1342  make
+ 1343  cmake ..
+ 1344  make
+ 1345  ./StaticFusion-Camera 
+ 1346  cmake ..
+ 1347  make
+ 1348  ./StaticFusion-Camera 
+ 1349  cmake ..
+ 1350  make
+ 1351  ./StaticFusion-Camera 
+ 1352  cmake ..
+ 1353  make
+ 1354  ./StaticFusion-Camera 
+ 1355  make
+ 1356  ./StaticFusion-Camera 
+ 1357  make
+ 1358  ./StaticFusion-Camera 
+ 1359  cmake ..
+ 1360  make
+ 1361  ./StaticFusion-Camera 
+ 1362  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_0
+ 1363  cmake ..
+ 1364  make
+ 1365  ./StaticFusion-Camera 
+ 1366  cmake ..
+ 1367  make
+ 1368  ./StaticFusion-Camera 
+ 1369  nvidia-smi
+ 1370  htop
+ 1371  base
+ 1372  conda env list
+ 1373  conda activate yolov5
+ 1374  python3 yolo_track_multi_merge.py 
+ 1375  history
+ 1376  python3 yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp10/weights/best.pt --conf 0.25 --classes 1, 3
+ 1377  python3 yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp10/weights/best.pt --conf 0.25 --classes 1 3
+ 1378  python3 yolo_track_multi.py --weights ../yolov5/runs/train/exp10/weights/best.pt --conf 0.25 --classes 1 3
+ 1379  python3 yolo_track_multi.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1380  python3 yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1381  history
+ 1382  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1383  base
+ 1384  conda activate hsm
+ 1385  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1386  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 256
+ 1387  ls
+ 1388  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation_with_pose.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 256
+ 1389  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 256
+ 1390  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation_with_pose.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 256
+ 1391  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 256
+ 1392  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1393  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation_with_pose.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1394  sudo rm -rf boot
+ 1395  sudo rm -rf boot
+ 1396  cmake ..
+ 1397  make
+ 1398  ./StaticFusion-Camera 
+ 1399  cmake ..
+ 1400  make
+ 1401  ./StaticFusion-Camera 
+ 1402  cmake ..
+ 1403  make
+ 1404  ./StaticFusion-Camera 
+ 1405  cmake ..
+ 1406  make
+ 1407  ./StaticFusion-Camera 
+ 1408  cmake ..
+ 1409  make
+ 1410  ./StaticFusion-Camera 
+ 1411  nvidia-smi
+ 1412  watch -n 5 nvidia-smi
+ 1413  ./ElasticFusion -cal ../cal_ori_1.txt -f -ftf -c 10 -i 50 -d 0.5
+ 1414  ./ElasticFusion -cal ../cal_ori_1.txt -f -ftf -c 5 -i 50 -d 0.5
+ 1415  ./ElasticFusion -cal ../cal_ori_1.txt -f -ftf -c 8 -i 50 -d 0.5
+ 1416  ./ElasticFusion -cal ../cal_ori_1.txt -f -ftf -c 5 -i 50 -d 0.5
+ 1417  colmap
+ 1418  colmap-gui
+ 1419  colmap ui
+ 1420  colmap gui
+ 1421  jupyter notebook
+ 1422  base
+ 1423  jupyter notebook
+ 1424  base
+ 1425  conda activate hsm
+ 1426  jupyter notebook
+ 1427  conda deactivate
+ 1428  conda activate monodepth
+ 1429  conda activate monodepth2
+ 1430  jupyter notebook
+ 1431  base
+ 1432  conda env list
+ 1433  conda activate pytorch3d
+ 1434  jupyter notebook
+ 1435  conda activate endodepth
+ 1436  base
+ 1437  conda activate endodepth
+ 1438  jupyter notebook
+ 1439  base
+ 1440  conda activate hsm
+ 1441  jupyter notebook
+ 1442  colmap gui
+ 1443  touch laparotest_query.txt
+ 1444  touch cameras.txt
+ 1445  touch images.txt
+ 1446  tourch points3D.txt
+ 1447  touch points3D.txt
+ 1448  touch des.txt
+ 1449  touch cameras.txt
+ 1450  vim images.txt 
+ 1451  gedit images.txt 
+ 1452  vi images.txt 
+ 1453  vi points3D.txt 
+ 1454  vi images.txt 
+ 1455  touch d9_k1_queries_with_intrinsics.txt
+ 1456  touch points3D.txt
+ 1457  roslaunch ur_modern_driver ur5_bringup.launch robot_ip:=192.168.3.33
+ 1458  rostopic echo /joint_states
+ 1459  roscore
+ 1460  gedit ~/.bashrc
+ 1461  source /opt/ros/melodic/setup.bash
+ 1462  roscore
+ 1463  ls /dev/video*
+ 1464  v4l2-ctl -d /dev/video0 -i 1
+ 1465  v4l2-ctl -d /dev/video1 -i 1
+ 1466  cd ~/PycharmProjects/OneSurgeonFourArms/
+ 1467  ls
+ 1468  python3 stero_camera_node.py 
+ 1469  rostopic echo /pred_action
+ 1470  cd ~/PycharmProjects/OneSurgeonFourArms/
+ 1471  ls
+ 1472  python3 main.py 
+ 1473  rostopic list
+ 1474  rostopic echo /ur_driver/URScript
+ 1475  Base
+ 1476  base
+ 1477  conda activate yolov5
+ 1478  cd /media/f/lbin/detection/depthtracker/
+ 1479  python yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.2 --classes 1 3 --view-img
+ 1480  rosrun joy joy_node
+ 1481  base
+ 1482  conda env list
+ 1483  conda activate pytorch3d
+ 1484  jupyter notebook
+ 1485  nvidia-smi
+ 1486  conda activate monodepth
+ 1487  base
+ 1488  conda activate monodepth2
+ 1489  python
+ 1490  jupyter notebook
+ 1491  bg
+ 1492  pip install scipy
+ 1493  pip install scipy==1.2.0
+ 1494  HTOP
+ 1495  htop
+ 1496  base
+ 1497  conda activate hfnet
+ 1498  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_db.yaml d9_k1 hfnet keys keypoints, scores,local_descriptor_map,global_descriptor
+ 1499  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_db.yaml d9_k1 --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1500  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml d9_k1 --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1501  python hfnet/evaluate_medical.py hfnet_model d9_k1 --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1502  python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1503  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_db.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1504  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1505  python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1506  python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --queries d9_k1 --export_poses
+ 1507  python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --queries d9_k1 --build_db --export_poses
+ 1508  python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --queries d9_k1 --build_db --export_poses --cpp_backend
+ 1509  python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --queries d9_k1 --build_db --export_poses
+ 1510  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_db.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1511  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptors,global_descriptor
+ 1512  python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --queries d9_k1 --build_db --export_poses
+ 1513  python hfnet/export_predictions.py hfnet/configs/hfnet_export_c1_db.yaml c1 --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1514  python hfnet/export_predictions.py hfnet/configs/hfnet_export_c1_queries.yaml c1 --exper_name hfnet --keys keypoints,scores,local_descriptors,global_descriptor
+ 1515  python hfnet/evaluate_medical.py hfnet_model c1 --local_method hfnet --global_method hfnet --build_db --queries c1 --export_poses
+ 1516  CUDA_VISIBLE_DEVICES=2 python hfnet/evaluate_medical.py hfnet_model c1 --local_method hfnet --global_method hfnet --build_db --queries c1 --export_poses
+ 1517  nvidia-smi
+ 1518  sudo reboot
+ 1519  htop
+ 1520  touch images.txt 
+ 1521  vi images.txt 
+ 1522  base
+ 1523  conda activate monodepth2
+ 1524  python
+ 1525  python3
+ 1526  python2
+ 1527  conda activate hfnet
+ 1528  base
+ 1529  conda activate hfnet
+ 1530  jupyter notebook
+ 1531  conda deactivate
+ 1532  conda activate monodepth2
+ 1533  jupyter notebook
+ 1534  bg
+ 1535  python
+ 1536  pip install scipy
+ 1537  pip install scipy==1.6.0
+ 1538  pip install scipy==1.2.0
+ 1539  pip install scipy==1.3.0
+ 1540  pip3 install --upgrade scipy
+ 1541  base
+ 1542  conda activate pytorch3d
+ 1543  jupyter notebook
+ 1544  nvidia-smi
+ 1545  watch -n 5 nvidia-smi
+ 1546  htop
+ 1547  sudo reboot
+ 1548  touch change_pose.txt
+ 1549  conda activate monodepth2
+ 1550  base
+ 1551  conda activate monodepth2
+ 1552  jupyter notebook
+ 1553  base
+ 1554  conda activate hfnet
+ 1555  history
+ 1556  CUDA_VISIBLE_DEVICES=2 python hfnet/evaluate_medical.py hfnet_model c1 --local_method hfnet --global_method hfnet --build_db --queries c1 --export_poses
+ 1557  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model c1 --local_method hfnet --global_method hfnet --build_db --queries c1 --export_poses
+ 1558  python hfnet/export_predictions.py hfnet/configs/hfnet_export_c1_db.yaml c1 --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1559  python hfnet/export_predictions.py hfnet/configs/hfnet_export_c1_queries.yaml c1 --exper_name hfnet --keys keypoints,scores,local_descriptors,global_descriptor
+ 1560  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model c1 --local_method hfnet --global_method hfnet --build_db --queries c1 --export_poses
+ 1561  python hfnet/export_predictions.py hfnet/configs/hfnet_export_c1_queries.yaml c1 --exper_name hfnet --keys keypoints,scores,local_descriptors,global_descriptor
+ 1562  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model c1 --local_method hfnet --global_method hfnet --build_db --queries c1 --export_poses
+ 1563  python hfnet/export_predictions.py hfnet/configs/hfnet_export_c1_queries.yaml c1 --exper_name hfnet --keys keypoints,scores,local_descriptors,global_descriptor
+ 1564  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model c1 --local_method hfnet --global_method hfnet --build_db --queries c1 --export_poses
+ 1565  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_db.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1566  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptors,global_descriptor
+ 1567  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1568  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_db.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1569  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptors,global_descriptor
+ 1570  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1571  htop
+ 1572  base
+ 1573  conda activate monodepth2
+ 1574  jupyter notebook
+ 1575  base
+ 1576  conda activate pytorch3d
+ 1577  jupyter notebook
+ 1578  base
+ 1579  conda activate monodepth2
+ 1580  jupyter notebook
+ 1581  touch change_pose_for_query.txt
+ 1582  base
+ 1583  conda activate hfnet
+ 1584  history
+ 1585  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1586  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptors,global_descriptor
+ 1587  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1588  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptors,global_descriptor
+ 1589  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1590  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptors,global_descriptor
+ 1591  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1592  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptors,global_descriptor
+ 1593  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1594  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptors,global_descriptor
+ 1595  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1596  nvidia-smi
+ 1597  top
+ 1598  htop
+ 1599  nvidia-smi
+ 1600  watch -n 1 nvidia-smi
+ 1601  history
+ 1602  cd /media/f/lbin/detection/
+ 1603  ls
+ 1604  base
+ 1605  conda activate yolov5
+ 1606  ls
+ 1607  cd yolov5/
+ 1608  ls
+ 1609  cd ../depthtracker/
+ 1610  CUDA_VISIBLE_DEVICES=1 python yolo_track_five_tools_merge.py --weights ../yolov5/runs/train/exp13/weights/best.pt --conf 0.25 --view-img --classes 1 3 5 7 9
+ 1611  rostopic echo /track/pred_position_tool0
+ 1612  rostopic echo /track/pred_position_tool0
+ 1613  rostopic echo /track/pred_position_tool3
+ 1614  rostopic echo /track/pred_position_tool0
+ 1615  rostopic echo /track/pred_position_tool4
+ 1616  rostopic echo /track/pred_position_tool0
+ 1617  rostopic echo /track/pred_position_tool1
+ 1618  rostopic echo /track/pred_position_tool0
+ 1619  /track/main_tool_depth
+ 1620  rostopic echo /track/main_tool_depth
+ 1621  rostopic echo /track/pred_position_tool5
+ 1622  rostopic echo /track/pred_action
+ 1623  rostopic echo /multitools/main_tool_id
+ 1624  rostopic echo /track/pred_position_tool0
+ 1625  rostopic echo /track/pred_position_tool2
+ 1626  conda activate hsm
+ 1627  base
+ 1628  conda activate hsm
+ 1629  ls
+ 1630  python stereo_depth_estimation.py 
+ 1631  history
+ 1632  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation_with_pose.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 256
+ 1633  cv2.imwrite('/media/f/ruofeng/code_depth_estimation/stereo_depth_estimation/high-res-stereo/mboutput/phantom_data_store/20210801/1/left/{}.jpg'.format(i), left_ros)
+ 1634  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation_with_pose.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 256
+ 1635  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation_with_pose.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1636  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation_with_pose.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 256
+ 1637  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation_with_pose.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1638  history
+ 1639  ./ElasticFusion -cal ../cal_ori_1.txt -f -ftf -c 10 -i 50 -d 0.5
+ 1640  ./ElasticFusion -cal ../cal_ori_1.txt -f -ftf -c 8 -i 50 -d 0.5
+ 1641  ./ElasticFusion -cal ../cal_ori_1.txt -f -ftf -c 5 -i 50 -d 0.5
+ 1642  ./ElasticFusion -cal ../cal_ori_1.txt -f -ftf -c 8 -i 50 -d 0.5
+ 1643  htop
+ 1644  nvidia-msi
+ 1645  nvidia-smi
+ 1646  ./stereo_camera_node 
+ 1647  base
+ 1648  history
+ 1649  base
+ 1650  conda activate hsm
+ 1651  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation_with_pose.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1652  history
+ 1653  ./ElasticFusion -cal ../cal_ori_1.txt -f -ftf -c 8 -i 50 -d 0.5
+ 1654  ls
+ 1655  ls -al
+ 1656  ls
+ 1657  history
+ 1658  cd /media/e/ruofeng/code/
+ 1659  ls
+ 1660  cd pose_estimation/
+ 1661  ls
+ 1662  cd hfnet-master/
+ 1663  conda activate hfnet
+ 1664  base
+ 1665  conda activate hfnet
+ 1666  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1667  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1668  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1669  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1670  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1671  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1672  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1673  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1674  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1675  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1676  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1677  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1678  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1679  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1680  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1681  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1682  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1683  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1684  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1685  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1686  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1687  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1688  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1689  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1690  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1691  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1692  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1693  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1694  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1695  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1696  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1697  touch random_0.txt
+ 1698  rostopic list
+ 1699  rosbag record /camera1_2/usb_cam1_2/image_raw
+ 1700  gedit ~/.bashrc
+ 1701  source /opt/ros/melodic/setup.bash
+ 1702  rosbag record /camera1_2/usb_cam1_2/image_raw
+ 1703  python rosbag2video.py 2021-07-20-21-59-03.bag 
+ 1704  rosbag record /camera1_2/usb_cam1_2/image_raw
+ 1705  cd test/
+ 1706  ls
+ 1707  python rosbag2video.py *.bag
+ 1708  python rosbag2video.py 2021-07-20-22-24-07.bag 
+ 1709  python rosbag2video.py 2021-07-20-22-25-49.bag 
+ 1710  python rosbag2video.py 2021-07-20-22-28-32.bag 
+ 1711  cd ../train/
+ 1712  ls
+ 1713  python rosbag2video.py 2021-07-20-22-02-04.bag 
+ 1714  python rosbag2video.py 2021-07-20-22-04-15.bag 
+ 1715  python rosbag2video.py 2021-07-20-22-06-33.bag 
+ 1716  python rosbag2video.py 2021-07-20-22-11-55.bag 
+ 1717  python rosbag2video.py 2021-07-20-22-13-31.bag 
+ 1718  python rosbag2video.py 2021-07-20-22-15-09.bag 
+ 1719  python rosbag2video.py 2021-07-20-22-19-10.bag 
+ 1720  python rosbag2video.py 2021-07-20-22-21-15.bag 
+ 1721  gedit ~/.bashrc
+ 1722  nvidia-smi
+ 1723  base
+ 1724  conda env lsit
+ 1725  conda env list
+ 1726  sudo rm -rf test_data/
+ 1727  jupyter notebook
+ 1728  base
+ 1729  jupyter notebook
+ 1730  base
+ 1731  conda activate monodepth2
+ 1732  jupyter notebook
+ 1733  base
+ 1734  conda activate monodepth2
+ 1735  jupyter notebook
+ 1736  rosrun joy joy_node
+ 1737  cd /media/f/lbin/detection/depthtracker/
+ 1738  base
+ 1739  conda activate yolov5
+ 1740  python yolo_track_multi_merge.py 
+ 1741  python yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.25 --classes 1 3 --view-img
+ 1742  python yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp12/weights/best.pt --conf 0.25 --classes 1 3 5 7 9 --view-img
+ 1743  python yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp12/weights/best.pt --conf 0.25 --classes 5 7 9 --view-img
+ 1744  python yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp12/weights/best.pt --conf 0.25 --classes 5 7 --view-img
+ 1745  python yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp12/weights/best.pt --conf 0.25 --view-img
+ 1746  python yolo_track_five_tools_merge.py --weights ../yolov5/runs/train/exp12/weights/best.pt --conf 0.25 --view-img
+ 1747  python yolo_track_five_tools_merge.py --weights ../yolov5/runs/train/exp12/weights/best.pt --conf 0.25 --view-img --classes 1 3 5 7 9
+ 1748  python yolo_track_five_tools_merge.py --weights ../yolov5/runs/train/exp13/weights/best.pt --conf 0.25 --view-img --classes 1 3 5 7 9
+ 1749  CUDA_VISIBLE_DEVICES=1 python yolo_track_five_tools_merge.py --weights ../yolov5/runs/train/exp13/weights/best.pt --conf 0.25 --view-img --classes 1 3 5 7 9
+ 1750  conda deactivate
+ 1751  rostopic echo joy
+ 1752  roslaunch ur_modern_driver ur5_bringup.launch robot_ip:=192.168.3.33
+ 1753  ping 192.168.3.33
+ 1754  roslaunch ur_modern_driver ur5_bringup.launch robot_ip:=192.168.3.33
+ 1755  base
+ 1756  nvidia-smi
+ 1757  kill -9 32068
+ 1758  sudo kill -9 32068
+ 1759  nvidia-smi
+ 1760  sudo kill -9 32068
+ 1761  nvidia-smi
+ 1762  sudo kill 32068
+ 1763  htop
+ 1764  base
+ 1765  git clone https://github.com/xy-guo/Learning-Monocular-Depth-by-Stereo.git
+ 1766  cd Learning-Monocular-Depth-by-Stereo/
+ 1767  base
+ 1768  conda create --name stereo2monodepth python=2.7
+ 1769  conda activate stereo2monodepth
+ 1770  conda install pytorch=0.4.1 cuda92 torchvision -c pytorch
+ 1771  conda install opencv3 -c menpo
+ 1772  pip install tensorboardX
+ 1773  ./scripts/install.sh 
+ 1774  base
+ 1775  ./scripts/install.sh 
+ 1776  gcc -v
+ 1777  ./scripts/install.sh 
+ 1778  base
+ 1779  conda activate pytorch0.4
+ 1780  python
+ 1781  conda deactivate
+ 1782  conda activate hfnet
+ 1783  python
+ 1784  conda deactivate
+ 1785  gcc -v
+ 1786  sudo update-alternatives --config gcc
+ 1787  gcc -v
+ 1788  sudo update-alternatives --config gcc
+ 1789  gcc -v
+ 1790  nvcc -v
+ 1791  nvcc -V
+ 1792  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_2/
+ 1793  [A
+ 1794  ./StaticFusion-ImageSeqAssoc ../test_data/phantom_2/
+ 1795  base
+ 1796  conda activate hfnet
+ 1797  history
+ 1798  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1799  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1800  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1801  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1802  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1803  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1804  python hfnet/export_predictions.py hfnet/configs/hfnet_export_medical_queries.yaml medical --exper_name hfnet --keys keypoints,scores,local_descriptor_map,global_descriptor
+ 1805  CUDA_VISIBLE_DEVICES=0,1,2 python hfnet/evaluate_medical.py hfnet_model medical --local_method hfnet --global_method hfnet --build_db --queries d9_k1 --export_poses
+ 1806  htop
+ 1807  nvidia-smi
+ 1808  htop
+ 1809  history
+ 1810  gcc -v
+ 1811  sudo update-alternatives --config gcc
+ 1812  base
+ 1813  conda env list
+ 1814  nvidia-smi
+ 1815  kill -9 32068
+ 1816  sudo kill -9 32068
+ 1817  nvidia-smi
+ 1818  sudo reboot
+ 1819  ./stereo_camera_node 
+ 1820  history
+ 1821  base
+ 1822  conda activate yolov5
+ 1823  cd /media/f/lbin/detection/depthtracker/
+ 1824  ls
+ 1825  python yolo_track_multi_merge.py --weights ../yolov5/runs/train/exp11/weights/best.pt --conf 0.2 --classes 1 3 --view-img
+ 1826  htop
+ 1827  nvidia-smi
+ 1828  base
+ 1829  conda activate hsm
+ 1830  jupyter notebook
+ 1831  conda deactivate
+ 1832  jupyter notebook
+ 1833  base
+ 1834  jupyter notebook
+ 1835  conda activate hsm
+ 1836  jupyter notebook
+ 1837  conda deactivate
+ 1838  base
+ 1839  conda install nb_conda
+ 1840  conda activate hsm
+ 1841  jupyter notebook
+ 1842  conda deactivate
+ 1843  conda install -n hsm ipykernel
+ 1844  conda activate hsm
+ 1845  jupyter notebook
+ 1846  python
+ 1847  conda deactivate
+ 1848  jupyter notebook
+ 1849  conda activate hsm
+ 1850  base
+ 1851  conda env list
+ 1852  base
+ 1853  rosbag info *.bag
+ 1854  matlab
+ 1855  base
+ 1856  matlab
+ 1857  history
+ 1858  history
+ 1859  base
+ 1860  conda env list
+ 1861  base
+ 1862  conda activate hsm
+ 1863  jupyter notebook
+ 1864  pip install jsonschema
+ 1865  jupyter notebook
+ 1866  conda install jsonschema
+ 1867  jupyter notebook
+ 1868  conda deactivate
+ 1869  conda install jsonschema
+ 1870  jupyter notebook
+ 1871  base
+ 1872  jupyter notebook
+ 1873  conda activate pytorch3d
+ 1874  jupyter notebook
+ 1875  conda deactivate
+ 1876  conda activate hsm
+ 1877  jupyter notebook
+ 1878  conda upgrade pip
+ 1879  pip install functools32
+ 1880  pip install --upgrade jsonschema
+ 1881  jupyter notebook
+ 1882  pip install ipython[notebook]
+ 1883  jupyter notebook
+ 1884  base
+ 1885  conda env list
+ 1886  conda activate camenvsim
+ 1887  jupyter notebook
+ 1888  base
+ 1889  conda env list
+ 1890  conda activate robodepth
+ 1891  jupyter notebook
+ 1892  base
+ 1893  conda env list
+ 1894  conda activate aanet
+ 1895  jupyter notebook
+ 1896  pip install ipython[notebook]
+ 1897  jupyter notebook
+ 1898  conda deactivate 
+ 1899  conda install -n aanet ipykernel
+ 1900  conda activate aanet
+ 1901  jupyter notebook
+ 1902  conda deactivate
+ 1903  conda activate sttr
+ 1904  jupyter notebook
+ 1905  pip install ipython[notebook]
+ 1906  conda deactivate
+ 1907  conda install -n sttr ipykernel
+ 1908  conda activate sttr
+ 1909  jupyter notebook
+ 1910  ./stereo_camera_node 
+ 1911  roscore
+ 1912  base
+ 1913  roscore
+ 1914  rosclean
+ 1915  rosclean -h
+ 1916  rosclean purge
+ 1917  roscore
+ 1918  sudo vim ~/.bashrc
+ 1919  source ~/.bashrc
+ 1920  sudo vim ~/.bashrc
+ 1921  source ~/.bashrc
+ 1922  sudo vim ~/.bashrc
+ 1923  source ~/.bashrc
+ 1924  sudo vim ~/.bashrc
+ 1925  source ~/.bashrc
+ 1926  sudo vim ~/.bashrc
+ 1927  source ~/.bashrc
+ 1928  sudo vim ~/.bashrc
+ 1929  source ~/.bashrc
+ 1930  base
+ 1931  python convert_to_image_ori.py --datapth='/media/e/data/Douqi/Stero/2020-11-10_Robotic_prostatectomy_D3241719/preprocess/'
+ 1932  conda env list
+ 1933  conda activate robodepth
+ 1934  python convert_to_image_ori.py --datapth='/media/e/data/Douqi/Stero/2020-11-10_Robotic_prostatectomy_D3241719/preprocess/'
+ 1935  python convert_to_image_ori.py --datapth='/media/e/data/Douqi/Stero/2020-11-10_Robotic_prostatectomy_D3241719/preprocess/M_11102020125200_00000hn20137808t_2_001_001-1.MP4'
+ 1936  python convert_to_image_ori.py --datapath='/media/e/data/Douqi/Stero/2020-11-10_Robotic_prostatectomy_D3241719/preprocess/M_11102020125200_00000hn20137808t_2_001_001-1.MP4'
+ 1937  base
+ 1938  conda activate hsm
+ 1939  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation_with_pose.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 256
+ 1940  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 256
+ 1941  CUDA_VISIBLE_DEVICES=2 python stereo_depth_estimation.py --loadmodel ./weights/kitti.tar  --testres 1 --clean 1  --max_disp 512
+ 1942  history
+ 1943  ./stereo_camera_node 
+ 1944  gst-launch-1.0 v4l2src device=/dev/video0 ! videoconvert ! videoscale ! video/x-raw, width=1920, height=1080, format=YV12 ! xvimagesink
+ 1945  v4l2-ctl -d /dev/video1 -i 1
+ 1946  v4l2-ctl -d /dev/video0 -i 1
+ 1947  gst-launch-1.0 v4l2src device=/dev/video0 ! videoconvert ! videoscale ! video/x-raw, width=1920, height=1080, format=YV12 ! xvimagesink
+ 1948  touch display_zoom_in_0.txt
+ 1949  touch display_zoom_out_0.txt
+ 1950  touch display_follow_0.txt
+ 1951  touch display_random_0.txt
+ 1952  history
+ 1953  base
+ 1954  conda env list
+ 1955  conda activate pytorch3d
+ 1956  jupyter notebook
+ 1957  ./rosbag2video/rosbag2video.py -t /usb_cam/image_raw_left -o ur5swab1video1.bag '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1958  ./rosbag2video.py -t /usb_cam/image_raw_left -o ur5swab1video1.bag '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1959  python3 ./rosbag2video.py -t /usb_cam/image_raw_left -o ur5swab1video1.bag '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1960  python3 rosbag2video.py -t /usb_cam/image_raw_left -o ur5swab1video1.bag '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1961  python2 rosbag2video.py -t /usb_cam/image_raw_left -o ur5swab1video1.bag '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1962  python2 rosbag2video.py -t /usb_cam/image_raw_left -o video1.mp4 ur5swab1video1.bag '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1963  python2 rosbag2video.py -t /usb_cam/image_raw_left -o  '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1964  python2 rosbag2video.py -t /usb_cam/image_raw_left '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1965  rosbag record -a
+ 1966  source /opt/ros/melodic/setup.bash
+ 1967  rosbag record -a
+ 1968  roscore
+ 1969  source /opt/ros/melodic/setup.bash
+ 1970  roscore
+ 1971  rostopic list
+ 1972  cd /media/trs-server/Seagate Basic/22icra/videobag
+ 1973  cd '/media/trs-server/Seagate Basic/22icra/videobag'
+ 1974  ls
+ 1975  ./rosbag2video/rosbag2video.py -t /usb_cam/image_raw_left -o ur5swab1video1.bag '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1976  python3 ./rosbag2video/rosbag2video.py -t /usb_cam/image_raw_left -o ur5swab1video1.bag '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1977  python ./rosbag2video/rosbag2video.py -t /usb_cam/image_raw_left -o ur5swab1video1.bag '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1978  python ./rosbag2video/rosbag2video.py
+ 1979  python ./rosbag2video/rosbag2video.py -t /usb_cam/image_raw_left -o ur5swab1video1.bag '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1980  python ./rosbag2video/rosbag2video.py -t /usb_cam/image_raw_right  '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1981  python ./rosbag2video.py -t /usb_cam/image_raw_right  '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video1.bag' 
+ 1982  python ./rosbag2video.py -t /usb_cam/image_raw_right  '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video6.bag' 
+ 1983  python ./rosbag2video.py -t /usb_cam/image_raw_left  '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab1video6.bag' 
+ 1984  python ./rosbag2video.py -t /usb_cam/image_raw_left  '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab2video6.bag' 
+ 1985  python ./rosbag2video.py -t /usb_cam/image_raw_right  '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab2video6.bag' 
+ 1986  python ./rosbag2video.py -t /usb_cam/image_raw_right  '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab3video4.bag' 
+ 1987  [A
+ 1988  python ./rosbag2video.py -t /usb_cam/image_raw_right  '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab3video4.bag' 
+ 1989  python ./rosbag2video.py -t /usb_cam/image_raw_left  '/media/trs-server/Seagate Basic/22icra/videobag/ur5swab3video4.bag' 
+ 1990  python ./rosbag2video.py -t /usb_cam/image_raw_left  '/media/trs-server/Seagate Basic/22icra/videobag/softfinal.bag' 
+ 1991  python ./rosbag2video.py -t /usb_cam/image_raw_left -end 120  '/media/trs-server/Seagate Basic/22icra/videobag/softfinal.bag' 
+ 1992  python ./rosbag2video.py -t /usb_cam/image_raw_left --end 120  '/media/trs-server/Seagate Basic/22icra/videobag/softfinal.bag' 
+ 1993  rosbag play softfinal.bag 
+ 1994  source /opt/ros/melodic/setup.bash
+ 1995  rosbag play softfinal.bag 
+ 1996  python ./rosbag2video.py -t /usb_cam/image_raw_left --end 120  '/media/trs-server/Seagate Basic/22icra/videobag/softfinal.bag' 
+ 1997  python ./rosbag2video.py -t /usb_cam/image_raw_left '/media/trs-server/Seagate Basic/22icra/videobag/softfinal.bag' 
+ 1998  python ./rosbag2video.py -t /usb_cam/image_raw_right '/media/trs-server/Seagate Basic/22icra/videobag/softfinal.bag' 
+ 1999  base
+ 2000  conda activate yolov5
+ 2001  python yolo_track_five_tools_merge.py 
+ 2002  history > hhhhh.txt

@@ -1,0 +1,1326 @@
+# python interpreter searches these subdirectories for modules
+import sys
+
+import numpy as np
+
+sys.path.insert(0, '../yolov5')
+
+import argparse
+import os
+import random
+import platform
+import shutil
+import time
+from pathlib import Path
+import cv2
+import torch
+import torch.backends.cudnn as cudnn
+
+# yolov5
+import sys
+sys.path.append('../')
+from yolov5.utils.datasets import LoadImages, LoadStreams, LoadRosImages
+from yolov5.utils.general import check_img_size, non_max_suppression, scale_coords, xyxy2xywh
+from yolov5.utils.torch_utils import select_device, time_synchronized
+from yolov5.models.experimental import attempt_load
+from yolov5.utils.plots import plot_one_box
+from yolov5.utils.datasets import letterbox
+
+# kalman filter
+from KalmanFilter_multi import convert_bbox_to_z, convert_x_to_bbox, KalmanBoxTracker, Tracker, Object, KalmanDepthTracker
+
+# Ros topic image
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge, CvBridgeError
+import rospy
+import roslib
+from geometry_msgs.msg import Vector3
+from std_msgs.msg import Float64, Int32, Bool
+from yolo_bbox_msg.msg import Boundingbox
+import threading
+
+def undistort_stereo(img_left, img_right):
+    h, w = img_left.shape[:2]
+    # cadaver 1
+    # cameraMatrixl = np.array([[614.168609265646, 0, 313.0206555706829],
+    #                           [0, 738.1651385508025, 235.3862056359984],
+    #                           [0, 0, 1]
+    #                           ])
+    # distCoeffsl = np.array([-0.4167637078476668, 0.2115469544750328, -0.000142856970004443, -0.0001385094350889732, -0.01788136982283482])
+
+    # cameraMatrixr = np.array([[614.7418560764659, 0, 327.4804274336815],
+    #                           [0, 738.6935585853797, 236.7408474068688],
+    #                           [0, 0, 1]
+    #                           ])
+    # distCoeffsr = np.array([-0.4195885760340053, 0.261727338401825, -0.001369613849501731, -0.001060413760636605, -0.1324850849982607])
+
+    # R = np.array([[0.9934224604491241, 0.001593706169290235, -0.1144957430468685],
+    #               [-0.002194635884885537, 0.9999844710045623, -0.005122628530201664],
+    #               [0.1144858010783056, 0.005340210704797108, 0.9934105312010171]])
+    # T = np.array([[3.914635325710078], [0.1225452545407107], [0.2321917126623933]])  # cadaver calibration
+
+    # curi
+    # cameraMatrixl = np.array([[662.2442132308511, 0, 344.9069167552053],
+    #                           [0, 663.4465422680099, 244.9097816667816],
+    #                           [0, 0, 1]
+    #                           ])
+    # distCoeffsl = np.array([-0.3998422020995984, 0.1974903638339781, -0.000977499191867238, 0.001463321449655296, -0.07176023016948978])
+    #
+    # cameraMatrixr = np.array([[672.156450947434, 0, 337.1348007607834],
+    #                           [0, 659.4031526687482, 233.1060205508514],
+    #                           [0, 0, 1]
+    #                           ])
+    # distCoeffsr = np.array([-0.4053127751351984, 0.2601311290555161, -0.001659039864156836, -0.001179532311658814, -0.09147876464963214])
+    #
+    # R = np.array([[0.9999207022053717, -0.0001611069341282794, 0.01259219383873574],
+    #               [7.297434460661222e-05, 0.9999755031114125, 0.006999132219243628],
+    #               [-0.0125930129778996, -0.006997658296401788, 0.9998962190160063]])
+    # T = np.array([[-4.021515245243654],[-0.1062506235283896],[0.08107672340610546]])
+
+    # cadaver2
+    cameraMatrixl = np.array([[611.7144025816513, 0, 318.9606832557497],
+                              [0, 734.6089131949849, 237.1816823407249],
+                              [0, 0, 1]
+                              ])
+    distCoeffsl = np.array([-0.401105175367071, 0.1042483674512157, -0.001568033995046414, -0.0002098981712412147, 0.2260079561641118])
+
+    cameraMatrixr = np.array([[617.2467717408903, 0, 313.8394120456613],
+                              [0, 740.552160621133, 252.354116195112],
+                              [0, 0, 1]
+                              ])
+    distCoeffsr = np.array([-0.4327127849915921, 0.3909415935084647, -0.002552002184081203, -0.002248265639644834, -0.4323438771030861])
+
+    R = np.array([[0.9954235025092086, -0.0006544868653047722, 0.0955595222845043],
+                  [0.002677985146337659, 0.9997748680274929, -0.02104855472865246],
+                  [-0.09552423277815701, 0.02120813305202102, 0.9952011535587126]])
+    T = np.array([[-3.890606513014955],[0.08063777381711944],[0.09600725548304803]])
+
+    new_size = (int(w*1.5), int(h*1.5))
+    # R1, R2, P1, P2, Q, validPixROI1, validPixROI2 = \
+    #     cv2.stereoRectify(cameraMatrixl, distCoeffsl, cameraMatrixr, distCoeffsr, (w, h), R, T, flags=cv2.CALIB_ZERO_DISPARITY, alpha=0)
+    R1, R2, P1, P2, Q, validPixROI1, validPixROI2 = \
+        cv2.stereoRectify(cameraMatrixl, distCoeffsl, cameraMatrixr, distCoeffsr, (w, h), R, T, flags=1, alpha=1)
+    map1_1, map1_2 = cv2.initUndistortRectifyMap(cameraMatrixl, distCoeffsl, R1, P1, (w, h), cv2.CV_16SC2)
+    map2_1, map2_2 = cv2.initUndistortRectifyMap(cameraMatrixr, distCoeffsr, R2, P2, (w, h), cv2.CV_16SC2)
+    result1 = cv2.remap(img_left, map1_1, map1_2, cv2.INTER_LINEAR)
+    result2 = cv2.remap(img_right, map2_1, map2_2, cv2.INTER_LINEAR)
+    return result1, result2, R1, R2, Q, map1_1 #map2_1
+
+def StereoDepth_left(rightImg, l_bbox, leftImg, R1, Q):
+    height, width = leftImg.shape[:2]
+    print('----------------------------------------------------------------------l_bbox: ', l_bbox, 'width: ', width, 'height: ', height)
+    if (len(l_bbox) != 0 and min(l_bbox) > 0 and max([l_bbox[0], l_bbox[2]]) <= 0.95*width and max([l_bbox[1], l_bbox[3]]) <= 0.95*height):
+        leftImgGray = cv2.cvtColor(leftImg, cv2.COLOR_RGB2GRAY)
+        leftTemplate = leftImgGray[int(l_bbox[1]):int(l_bbox[3]), int(l_bbox[0]):int(l_bbox[2])]
+        rightImgGray = cv2.cvtColor(rightImg, cv2.COLOR_RGB2GRAY)
+        start_index = np.maximum(0, l_bbox[0] - 200)
+        rightSeach = rightImgGray[int(l_bbox[1]):int(l_bbox[3]), int(start_index):int(l_bbox[2])]
+        scale_ = np.minimum(50.0/(l_bbox[2] - l_bbox[0]), 50.0/(l_bbox[3] - l_bbox[1])) #np.minimum(50.0/(l_bbox[2] - l_bbox[0]), 50.0/(l_bbox[3] - l_bbox[1]))
+        resize_factor = np.minimum(scale_, 1.0)
+
+        leftTemplate_rsz = cv2.resize(leftTemplate.copy(), (int(leftTemplate.shape[1]*resize_factor), int(leftTemplate.shape[0]*resize_factor)), interpolation=cv2.INTER_AREA)
+        rightSearch_rsz = cv2.resize(rightSeach.copy(), (int(rightSeach.shape[1]*resize_factor), int(rightSeach.shape[0]*resize_factor)), interpolation=cv2.INTER_AREA)
+
+        ncc_value = cv2.matchTemplate(rightSearch_rsz, leftTemplate_rsz, cv2.TM_CCORR_NORMED)
+        # [int(l_bbox[0]*resize_factor), int(l_bbox[1]*resize_factor),
+        # int(l_bbox[2]*resize_factor), int(l_bbox[3]*resize_factor)]
+        u_l = l_bbox[0]*resize_factor
+        v_l = l_bbox[1]*resize_factor
+
+        matched_id = np.argmax(ncc_value)
+        u_r = matched_id + start_index * resize_factor
+        v_r = v_l
+
+        visual_d = u_l - u_r
+        pixel_coordinate = [u_l / resize_factor, v_l / resize_factor, visual_d / resize_factor, 1]
+        pixel_coordinate = np.array(pixel_coordinate)
+        pixel_coordinate.reshape([4, 1])
+        xyz_rectified = np.dot(Q, pixel_coordinate)
+
+        T_toLeftCam = np.zeros([4, 4], dtype=np.float32)
+        T_toLeftCam[0:3, 0:3] = R1.T
+        T_toLeftCam[3, 3] = 1
+        xyz_rectified = np.dot(T_toLeftCam, xyz_rectified)
+
+        xyz_rectified = xyz_rectified/xyz_rectified[3]
+        tool_depth = xyz_rectified[2]
+        # print('visual d: ', visual_d)
+        # tool_depth = 1
+        # cv2.imshow('Matched LeftImg', leftImg_[r_box[1]:r_box[3], u_l-(r_box[2]-r_box[0]):u_l,])
+        matched_part = rightSearch_rsz[:, matched_id:matched_id+leftTemplate_rsz.shape[1]]
+        cv2.imshow('Matched RightImg', matched_part)
+
+        print('---------------------------------raw l_box info: ', l_bbox[0], l_bbox[1], l_bbox[2], l_bbox[3])
+
+        if u_r + (l_bbox[2]-l_bbox[0])*resize_factor <= leftImg.shape[1]*resize_factor * 0.12: # if there is no satified matching in right image
+            print('there is no satified matching in right image')
+            tool_depth = -1
+
+        # if start_index + u_r <= (size[0]-1) * 0.02 or start_index + u_r >= (size[0]-1) * 0.98:
+        #     print('there is no satisfied matching in right image')
+        #     tool_depth = -1
+        # print('-------------------------------------------------matched---: ', start_index, end_index, ncc_value[0, u_r], start_index + u_r, start_index + u_r + (l_box[2]-l_box[0]), size[0])
+    else:
+        print('no valid depth estimation ! The predicted bbox is out of the image.')
+        tool_depth = -1
+
+    return np.clip(tool_depth, -1, 200)
+
+def SteroTempleteDepthCal_left(rightImg, l_bbox, leftImg, R1, Q):
+    height, width = leftImg.shape[:2]
+    scale_ = np.minimum(50.0/(l_bbox[2] - l_bbox[0]), 50.0/(l_bbox[3] - l_bbox[1]))#np.minimum(50.0/(l_bbox[2] - l_bbox[0]), 50.0/(l_bbox[3] - l_bbox[1]))
+    resize_factor = np.minimum(scale_, 1.0)
+    size = (int(width*resize_factor), int(height*resize_factor))
+    leftImg_ = cv2.resize(leftImg.copy(), size, interpolation=cv2.INTER_AREA)
+    rightImg_ = cv2.resize(rightImg.copy(), size, interpolation=cv2.INTER_AREA)
+    print('----------------------------------------------------------------------l_bbox: ', l_bbox, 'width: ', width, 'height: ', height)
+    if (len(l_bbox) != 0 and min(l_bbox) > 0 and max([l_bbox[0], l_bbox[2]]) <= 0.95*width and max([l_bbox[1], l_bbox[3]]) <= 0.95*height):
+        # print(l_bbox)
+        l_box = [int(l_bbox[0]*resize_factor), int(l_bbox[1]*resize_factor), int(l_bbox[2]*resize_factor), int(l_bbox[3]*resize_factor)]
+        # print('int l_box', l_box)
+        # print(leftImg_.shape)
+        # print(rightImg_.shape)
+        left_template = leftImg_[l_box[1]:l_box[3], l_box[0]:l_box[2], :]
+        # print('left rect shape: ', left_template.shape)
+        cv2.imshow('left template', left_template)
+        d1 = (left_template - left_template.mean()) / left_template.std()
+        ncc_value = np.zeros((1, rightImg_.shape[1]))
+        # start_index = l_box[0]
+        # end_index = np.minimum(start_index+100, right.shape[0])
+        start_index = np.maximum(0, int(l_box[0]-100*resize_factor))
+        end_index = l_box[0]
+        # print('start index: ', start_index, 'end index: ', end_index)
+        for index in range(start_index, end_index):
+            right_rect = rightImg_[l_box[1]:l_box[3], index:index+(l_box[2]-l_box[0]), :]
+            # print('index: ', index)
+            # print('right rect shape: ', right_rect.shape)
+            d2 = (right_rect - right_rect.mean()) / right_rect.std()
+            ncc_value[0, index] = np.sum(d1 * d2)
+
+        u_l = l_box[0]
+        v_l = l_box[1]
+
+        u_r = np.argmax(ncc_value)
+        v_r = l_box[1]
+
+        visual_d = u_l - u_r
+        pixel_coordinate = [u_l / resize_factor, v_l / resize_factor, visual_d / resize_factor, 1]
+        pixel_coordinate = np.array(pixel_coordinate)
+        pixel_coordinate.reshape([4, 1])
+        xyz_rectified = np.dot(Q, pixel_coordinate)
+
+        T_toLeftCam = np.zeros([4, 4], dtype=np.float32)
+        T_toLeftCam[0:3, 0:3] = R1.T
+        T_toLeftCam[3, 3] = 1
+        xyz_rectified = np.dot(T_toLeftCam, xyz_rectified)
+
+        xyz_rectified = xyz_rectified/xyz_rectified[3]
+        tool_depth = xyz_rectified[2]
+        # print('visual d: ', visual_d)
+        # tool_depth = 1
+        # cv2.imshow('Matched LeftImg', leftImg_[r_box[1]:r_box[3], u_l-(r_box[2]-r_box[0]):u_l,])
+        cv2.imshow('Matched RightImg', rightImg_[l_box[1]:l_box[3], u_r:u_r+(l_box[2]-l_box[0]),])
+
+        print('---------------------------------raw l_box info: ', l_bbox[0], l_bbox[1], l_bbox[2], l_bbox[3])
+
+        if start_index + u_r + (l_box[2]-l_box[0]) <= size[0] * 0.12: # if there is no satified matching in right image
+            print('there is no satified matching in right image')
+            tool_depth = -1
+
+        # if start_index + u_r <= (size[0]-1) * 0.02 or start_index + u_r >= (size[0]-1) * 0.98:
+        #     print('there is no satisfied matching in right image')
+        #     tool_depth = -1
+        # print('-------------------------------------------------matched---: ', start_index, end_index, ncc_value[0, u_r], start_index + u_r, start_index + u_r + (l_box[2]-l_box[0]), size[0])
+    else:
+        print('no valid depth estimation ! The predicted bbox is out of the image.')
+        tool_depth = -1
+    # print('```````````````````depth: ', tool_depth) # mm
+    return np.clip(tool_depth, -1, 200)
+
+
+palette = (2 ** 11 - 1, 2 ** 15 - 1, 2 ** 20 - 1)
+
+# flag for publish L/R images or record videos
+pub_LR_imgs_flag = False
+record_videos_flag = False
+
+# receieve the image and the predicted mask
+img_LR_src = None
+img_L_src = None
+img_R_src = None
+image_L = None
+image_R = None
+left = None  #np.zeros((480, 640, 3))
+right = None
+# tool_depth_in_thread = -1
+l_bbox = None
+
+main_tool_id = 1
+system_version = 0
+bbox_scale = 1.0 # from 0~2
+mid_depth = 75 # mm
+mid_range = 20 # mm
+bridge = CvBridge()
+pred_action_msg = Vector3()
+pred_position_msg = Vector3()
+depth_msg = Float64()
+
+cap_R = cv2.VideoCapture(1)
+# cap_R.set(cv2.CAP_PROP_MODE, cv2.CAP_MODE_YUYV) # cv2.CAP_MODE_YUYV
+cap_R.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
+width = 1920
+height = 1080
+cap_R.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+cap_R.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+cap_R.set(cv2.CAP_PROP_FPS, 60) # TODO: Modify
+
+cap_L = cv2.VideoCapture(3)
+cap_L.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
+width = 1920
+height = 1080
+cap_L.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+cap_L.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+cap_L.set(cv2.CAP_PROP_FPS, 60) # TODO: Modify
+
+if record_videos_flag:
+    SAVE_FILE_DIR = './data/videos'
+    if not os.path.exists(SAVE_FILE_DIR):
+        os.makedirs(SAVE_FILE_DIR)
+    SAVE_LEFT_VIDEO_NAME = os.path.join(SAVE_FILE_DIR, 'test_L.avi')
+    SAVE_RIGHT_VIDEO_NAME = os.path.join(SAVE_FILE_DIR, 'test_R.avi')
+    # video_L = cv2.VideoWriter(SAVE_LEFT_VIDEO_NAME, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), cap_L.get(cv2.CAP_PROP_FPS), (cap_L.get(cv2.CAP_PROP_FRAME_WIDTH), cap_L.get(cv2.CAP_PROP_FRAME_HEIGHT)), True)
+    # video_R = cv2.VideoWriter(SAVE_RIGHT_VIDEO_NAME, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), cap_R.get(cv2.CAP_PROP_FPS), (cap_R.get(cv2.CAP_PROP_FRAME_WIDTH), cap_R.get(cv2.CAP_PROP_FRAME_HEIGHT)), True)
+    video_L = cv2.VideoWriter(SAVE_LEFT_VIDEO_NAME, cv2.VideoWriter_fourcc(*'XVID'), 50, (1920, 1080), True) # TODO: Modify 50
+    video_R = cv2.VideoWriter(SAVE_RIGHT_VIDEO_NAME, cv2.VideoWriter_fourcc(*'XVID'), 30, (1920, 1080), True) # TODO: Modify 30
+
+# def cameraLR_job():
+#     global img_LR_src
+#     while not rospy.is_shutdown():
+#         ret_R, image_R = cap_R.read()
+#         ret_L, image_L = cap_L.read()
+#         if image_L is not None and image_R is not None:
+#             Limg_ROI = image_L[3:1080, 258:1661]
+#             Rimg_ROI = image_R[0:1061, 47:1853]
+#             rz_R_Img_640p = cv2.resize(Rimg_ROI, (640, 480))
+#             rz_L_Img_640p = cv2.resize(Limg_ROI, (640, 480))
+#             img_LR_src = cv2.hconcat([rz_L_Img_640p, rz_R_Img_640p])
+#
+# cameraL_thread = threading.Thread(target=cameraLR_job)
+# cameraL_thread.daemon = True
+# cameraL_thread.start()
+
+# cadaver setting
+# def cameraL_job():
+#     global img_L_src, image_L
+#     while not rospy.is_shutdown():
+#         ret_L, image_L = cap_L.read()
+#         if image_L is not None:
+#             Limg_ROI = image_L[0:1080, 95:1825]
+#             img_L_src = cv2.resize(Limg_ROI, (640, 480))
+#
+# def cameraR_job():
+#     global img_R_src, image_R
+#     while not rospy.is_shutdown():
+#         ret_R, image_R = cap_R.read()
+#         if image_R is not None:
+#             Rimg_ROI = image_R[0:1080, 95:1825]
+#             img_R_src = cv2.resize(Rimg_ROI, (640, 480))
+
+# curi setting
+def cameraL_job():
+    global img_L_src
+    while not rospy.is_shutdown():
+        ret_L, image_L = cap_L.read()
+        if image_L is not None:
+            # Limg_ROI = image_L[3:1080, 258:1661] # curi
+            Limg_ROI = image_L[0:1080, 96:1824] # cadaver2
+            img_L_src_ = cv2.resize(Limg_ROI, (640, 480))
+            # img_L_src_ = cv2.GaussianBlur(img_L_src_, (9, 9), 1)
+            img_L_src = cv2.medianBlur(img_L_src_, 3)
+
+def cameraR_job():
+    global img_R_src
+    while not rospy.is_shutdown():
+        ret_R, image_R = cap_R.read()
+        if image_R is not None:
+            # Rimg_ROI = image_R[0:1061, 47:1853] # curi
+            Rimg_ROI = image_R[0:1080, 96:1824] # cadaver2
+            img_R_src_ = cv2.resize(Rimg_ROI, (640, 480))
+            # img_R_src_ = cv2.GaussianBlur(img_R_src_, (9, 9), 1)
+            img_R_src = cv2.medianBlur(img_R_src_, 3)
+
+def undistort_job():
+    global img_L_src, img_R_src, left, right, R1, R2, Q, map1_1
+    while not rospy.is_shutdown():
+        if img_L_src is not None and img_R_src is not None:
+            left, right, R1, R2, Q, map1_1 = undistort_stereo(img_L_src, img_R_src)
+
+def caldepth_job():
+    global left, right, R1, Q, l_bbox, tool_depth_in_thread
+    while not rospy.is_shutdown():
+        # print('----------------------depth--1: ', tool_depth_in_thread, l_bbox)
+        if left is not None and right is not None and l_bbox is not None:
+            tool_depth_in_thread = SteroTempleteDepthCal_left(right, l_bbox, left, R1, Q)
+            print('----------------------depth--2: ', tool_depth_in_thread)
+
+def recordR_job():
+    global image_R, video_R
+    while not rospy.is_shutdown():
+        if image_R is not None:
+            timeR_s = time.time()
+            video_R.write(image_R)
+            timeR_e = time.time()
+            print('R image write time: ', timeR_e - timeR_s)
+    print('-----------------------release R video ...')
+    video_R.release()
+    print('-----------------------released R video ...')
+
+def recordL_job():
+    global image_L, video_L
+    while not rospy.is_shutdown():
+        if image_L is not None:
+            timeL_s = time.time()
+            video_L.write(image_L)
+            timeL_e = time.time()
+            print('L image write time: ', timeL_e - timeL_s)
+    print('-----------------------release L video ...')
+    video_L.release()
+    print('-----------------------released L video ...')
+
+cameraL_thread = threading.Thread(target=cameraL_job)
+cameraL_thread.daemon = True
+cameraL_thread.start()
+
+cameraR_thread = threading.Thread(target=cameraR_job)
+cameraR_thread.daemon = True
+cameraR_thread.start()
+
+undistort_thread = threading.Thread(target=undistort_job)
+undistort_thread.daemon = True
+undistort_thread.start()
+
+if record_videos_flag:
+    record_L_thread = threading.Thread(target=recordL_job)
+    record_L_thread.daemon = True
+    record_L_thread.start()
+
+    record_R_thread = threading.Thread(target=recordR_job)
+    record_R_thread.daemon = True
+    record_R_thread.start()
+
+# caldepth_thread = threading.Thread(target=caldepth_job)
+# caldepth_thread.daemon = True
+# caldepth_thread.start()
+
+def mainToolIdxCallback(idx):
+    global main_tool_id
+    main_tool_id = idx.data
+
+def systemVersionCallback(num):
+    global system_version
+    system_version = num.data
+
+def bboxScaleCallback(scale):
+    global bbox_scale
+    bbox_scale = scale.data
+
+def midDepthCallback(depth):
+    global mid_depth
+    mid_depth = depth.data
+
+def midRangeCallback(range):
+    global mid_range
+    mid_range = range.data
+
+# Initialization: ROS
+rospy.init_node("TD_node", anonymous=True)
+# capture image
+# rospy.Subscriber("/camera1_2/usb_cam1_2/image_raw", Image, imageLeftRightCallback, queue_size=1, buff_size=2**24)
+# rospy.Subscriber("/camera1_2/usb_cam1_2/image_raw", Image, imageLeftRightCallback)
+
+# acquire the main tool idx
+rospy.Subscriber("/multitools/main_tool_id", Int32, mainToolIdxCallback)
+rospy.Subscriber("/system_info/version", Int32, systemVersionCallback)
+# acquire the bbox scale
+rospy.Subscriber("/customize_settings/scale_bbox", Float64, bboxScaleCallback)
+# acquire the depth range
+rospy.Subscriber("/customize_settings/mid_depth", Float64, midDepthCallback)
+rospy.Subscriber("/customize_settings/mid_range", Float64, midRangeCallback)
+# publish the predicted action
+pred_action_pub = rospy.Publisher("/track/pred_action", Vector3, queue_size=1)
+# publish the current white/yellow bbox
+whitebbox_refer_pub = rospy.Publisher("/visualize_bbox/white_bbox", Boundingbox, queue_size=1)
+yellowbbox_refer_pub = rospy.Publisher("/visualize_bbox/yellow_bbox", Boundingbox, queue_size=1)
+whetherbbox_visualize_pub = rospy.Publisher("/visualize_bbox/whether_visualize", Bool, queue_size=1)
+white_bbox_msg = Boundingbox()
+yellow_bbox_msg = Boundingbox()
+whether_visualize_msg = Bool()
+# publish the predicted position
+NUM_TOOLS_TO_TRACK = 5
+# main_tool_id = 1 # the second tool
+pred_position_tools_pub = [rospy.Publisher("/track/pred_position_tool" + str(i), Vector3, queue_size=1) for i in range(NUM_TOOLS_TO_TRACK)]
+# pred_position_main_pub = rospy.Publisher("/pred_position_main", Vector3, queue_size=10)
+tool_depth_pub = rospy.Publisher("/track/main_tool_depth", Float64, queue_size=1)
+if pub_LR_imgs_flag:
+    LR_imgs_pub = rospy.Publisher("/camera1_2/usb_cam1_2/image_raw_1080p", Image, queue_size=1)
+
+frequency = 150 # 50hz
+dt = 1.0 / frequency
+loop_rate = rospy.Rate(frequency)
+
+def linear_assignment(cost_matrix):
+    try:
+        import lap # linear assignment problem solver
+        _, x, y = lap.lapjv(cost_matrix, extend_cost = True)
+        return np.array([[y[i],i] for i in x if i>=0])
+    except ImportError:
+        from scipy.optimize import linear_sum_assignment
+        x, y = linear_sum_assignment(cost_matrix)
+        return np.array(list(zip(x, y)))
+
+def bbox_rel(*xyxy):
+    """" Calculates the relative bounding box from absolute pixel values. """
+    bbox_left = min([xyxy[0].item(), xyxy[2].item()])
+    bbox_top = min([xyxy[1].item(), xyxy[3].item()])
+    bbox_w = abs(xyxy[0].item() - xyxy[2].item())
+    bbox_h = abs(xyxy[1].item() - xyxy[3].item())
+    x_c = (bbox_left + bbox_w / 2)
+    y_c = (bbox_top + bbox_h / 2)
+    w = bbox_w
+    h = bbox_h
+    return x_c, y_c, w, h
+
+
+def compute_color_for_labels(label):
+    """
+    Simple function that adds fixed color depending on the class
+    """
+    color = [int((p * (label ** 2 - label + 1)) % 255) for p in palette]
+    return tuple(color)
+
+
+def draw_boxes(img, bbox, identities=None, categories=None, names=None, offset=(0, 0)):
+    for i, box in enumerate(bbox):
+        x1, y1, x2, y2 = [int(i) for i in box]
+        x1 += offset[0]
+        x2 += offset[0]
+        y1 += offset[1]
+        y2 += offset[1]
+        # box text and bar
+        cat = int(categories[i]) if categories is not None else 0
+
+        id = int(identities[i]) if identities is not None else 0
+
+        color = compute_color_for_labels(id)
+
+        label = f'{names[cat]} | {id}'
+        t_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_PLAIN, 2, 2)[0]
+        cv2.rectangle(img, (x1, y1), (x2, y2), color, 3)
+        cv2.rectangle(
+            img, (x1, y1), (x1 + t_size[0] + 3, y1 + t_size[1] + 4), color, -1)
+        cv2.putText(img, label, (x1, y1 +
+                                 t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 2, [255, 255, 255], 2)
+    return img
+
+def iou_batch(bb_test, bb_gt):
+    """
+    From SORT: Computes IOU between two bboxes in the form [x1,y1,x2,y2]
+    """
+    bb_gt = np.expand_dims(bb_gt, 0)
+    bb_test = np.expand_dims(bb_test, 1)
+
+    xx1 = np.maximum(bb_test[..., 0], bb_gt[..., 0])
+    yy1 = np.maximum(bb_test[..., 1], bb_gt[..., 1])
+    xx2 = np.minimum(bb_test[..., 2], bb_gt[..., 2])
+    yy2 = np.minimum(bb_test[..., 3], bb_gt[..., 3])
+    w = np.maximum(0., xx2 - xx1)
+    h = np.maximum(0., yy2 - yy1)
+    wh = w * h
+    o = wh / ((bb_test[..., 2] - bb_test[..., 0]) * (bb_test[..., 3] - bb_test[..., 1])
+              + (bb_gt[..., 2] - bb_gt[..., 0]) * (bb_gt[..., 3] - bb_gt[..., 1]) - wh)
+    return (o)
+
+def re_associate_detections_to_trackers(detections, trackers, objects, iou_threshold = 0.3):
+    """
+       Assigns detections to tracked object (both represented as bounding boxes)
+       Input:
+       detections: the detections
+       trackers: the trackers object (list type)
+       iou_threshold: the base condition to get a match
+       Returns matches list
+       """
+    if (len(trackers) == 0):
+        return np.empty((0, 5)), [], []
+
+    # trackers bbox extraction
+    tks_bbox = np.empty((0, 5))
+    for index in range(len(trackers)):
+        if len(trackers[index].cur_bbox) > 0:
+            tks_bbox = np.vstack((tks_bbox, trackers[index].cur_bbox)) # TODO: need to refine later, need to be a bbox type: (n, 5)
+
+    iou_matrix = iou_batch(detections, tks_bbox) # here the trackers are the bbox, not the tracker object
+
+    # we can rebuilt a cost matrix to replace the iou_matrix later.
+
+    if min(iou_matrix.shape) > 0:
+        a = (iou_matrix > iou_threshold).astype(np.int32)
+        if a.sum(1).max() == 1 and a.sum(0).max() == 1:
+            matched_indices = np.stack(np.where(a), axis=1)
+        else:
+            matched_indices = linear_assignment(-iou_matrix)
+    else:
+        matched_indices = np.empty(shape=(0, 2))
+
+    # filter out matched with low IOU
+    matches = []
+    matched_bbox = []
+    matched_tracker = []
+    matched_object = []
+    for m in matched_indices:
+        print('iou: ', iou_matrix[m[0], m[1]], 'matched bbox: ', m[0], 'matched filter: ', m[1], 'num of filter: ', len(trackers))
+        if (iou_matrix[m[0], m[1]] >= iou_threshold):
+            print('matched bbox: ', m[0], 'matched filter: ', m[1], 'num of filter: ', len(trackers))
+            matches.append(m.reshape(1, 2))
+            matched_bbox.append(detections[m[0]])
+            matched_tracker.append(trackers[m[1]])
+            matched_object.append(objects[m[1]])
+
+    if (len(matches) == 0):
+        matched_bbox = np.empty((0, 5), dtype=int)
+    else:
+        matched_bbox = np.array(matched_bbox)
+
+    # split the matched bbox and the tracker respectively
+    # matched_bbox = detections[matches[0, 0]]
+    # matched_tracker = trackers[matches[0, 1]]
+
+    return matched_bbox, matched_tracker, matched_object
+
+def SteroTempleteDepthCal(leftImg, l_bbox, rightImg, resize_factor, R1, Q):
+    height, width = leftImg.shape[:2]
+    size = (int(width*resize_factor), int(height*resize_factor))
+    leftImg_ = cv2.resize(leftImg.copy(), size, interpolation=cv2.INTER_AREA)
+    rightImg_ = cv2.resize(rightImg.copy(), size, interpolation=cv2.INTER_AREA)
+    print('l_bbox: ', l_bbox, 'width: ', width, 'height: ', height)
+    if (len(l_bbox) != 0 and min(l_bbox) > 0 and max([l_bbox[0], l_bbox[2]]) <= width and max([l_bbox[1], l_bbox[3]]) <= height):
+        # print(l_bbox)
+        l_box = [int(l_bbox[0]*resize_factor), int(l_bbox[1]*resize_factor), int(l_bbox[2]*resize_factor), int(l_bbox[3]*resize_factor)]
+        # print(l_box)
+        # print(leftImg_.shape)
+        # print(rightImg_.shape)
+        left_template = leftImg_[l_box[1]:l_box[3], l_box[0]:l_box[2], :]
+        # print('left rect shape: ', left_template.shape)
+        cv2.imshow('left template', left_template)
+        d1 = (left_template - left_template.mean()) / left_template.std()
+        ncc_value = np.zeros((1, leftImg_.shape[1]))
+        # start_index = l_box[0]
+        # end_index = np.minimum(start_index+100, right.shape[0])
+        start_index = np.maximum(0, int(l_box[0]-100*resize_factor))
+        end_index = l_box[0]
+        print('start index: ', start_index, 'end index: ', end_index)
+        for index in range(start_index, end_index):
+            right_rect = rightImg_[l_box[1]:l_box[3], index:index+l_box[2]-l_box[0], :]
+            # print('index: ', index)
+            # print('right rect shape: ', right_rect.shape)
+            d2 = (right_rect - right_rect.mean()) / right_rect.std()
+            ncc_value[0, index] = np.sum(d1 * d2)
+
+        u_l = l_box[0]
+        v_l = l_box[1]
+
+        u_r = np.argmax(ncc_value)
+        v_r = l_box[1]
+
+        visual_d = u_l - u_r
+        pixel_coordinate = [u_l / resize_factor, v_l / resize_factor, visual_d / resize_factor, 1]
+        pixel_coordinate = np.array(pixel_coordinate)
+        pixel_coordinate.reshape([4, 1])
+        xyz_rectified = np.dot(Q, pixel_coordinate)
+
+        T_toLeftCam = np.zeros([4, 4], dtype=np.float32)
+        T_toLeftCam[0:3, 0:3] = R1.T
+        T_toLeftCam[3, 3] = 1
+        xyz_rectified = np.dot(T_toLeftCam, xyz_rectified)
+
+        xyz_rectified = xyz_rectified/xyz_rectified[3]
+        tool_depth = xyz_rectified[2]
+        # tool_depth = 1
+        cv2.imshow('Matched RightImg', rightImg_[l_box[1]:l_box[3], u_r:u_r+l_box[2]-l_box[0],])
+    else:
+        print('no valid depth estimation ! The predicted bbox is out of the image.')
+        tool_depth = -1
+
+    return tool_depth
+
+def SteroTempleteDepthCal_right(rightImg, r_bbox, leftImg, resize_factor, R2, Q):
+    height, width = rightImg.shape[:2]
+    size = (int(width*resize_factor), int(height*resize_factor))
+    leftImg_ = cv2.resize(leftImg.copy(), size, interpolation = cv2.INTER_AREA)
+    rightImg_ = cv2.resize(rightImg.copy(), size, interpolation = cv2.INTER_AREA)
+    print('r_bbox: ', r_bbox, 'width: ', width, 'height: ', height)
+    if (len(r_bbox) != 0 and min(r_bbox) > 0 and max([r_bbox[0], r_bbox[2]]) <= width and max([r_bbox[1], r_bbox[3]]) <= height):
+        # print(l_bbox)
+        r_box = [int(r_bbox[0]*resize_factor), int(r_bbox[1]*resize_factor), int(r_bbox[2]*resize_factor), int(r_bbox[3]*resize_factor)]
+        print('int r_box', r_box)
+        print(leftImg_.shape)
+        print(rightImg_.shape)
+        right_template = rightImg_[r_box[1]:r_box[3], r_box[0]:r_box[2], :]
+        print('right rect shape: ', right_template.shape)
+        cv2.imshow('right template', right_template)
+        d1 = (right_template - right_template.mean()) / right_template.std()
+        ncc_value = np.zeros((1, rightImg_.shape[1]))
+        # start_index = l_box[0]
+        # end_index = np.minimum(start_index+100, right.shape[0])
+        start_index = r_box[2]
+        end_index = np.minimum(int(r_box[2]+100*resize_factor), int(width*resize_factor))
+        print('start index: ', start_index, 'end index: ', end_index)
+        for index in range(start_index, end_index):
+            left_rect = leftImg_[r_box[1]:r_box[3], index-(r_box[2]-r_box[0]):index,:]
+            # print(index)
+            # print('left rect shape: ', left_rect.shape)
+            d2 = (left_rect - left_rect.mean()) / left_rect.std()
+            ncc_value[0, index] = np.sum(d1 * d2)
+
+        u_r = r_box[2]
+        v_r = r_box[3]
+
+        u_l = np.argmax(ncc_value)
+        v_l = r_box[3]
+
+        visual_d = u_l - u_r
+        pixel_coordinate = [u_l / resize_factor, v_l / resize_factor, visual_d / resize_factor, 1]
+        pixel_coordinate = np.array(pixel_coordinate)
+        pixel_coordinate.reshape([4, 1])
+        xyz_rectified = np.dot(Q, pixel_coordinate)
+
+        T_toLeftCam = np.zeros([4, 4], dtype=np.float32)
+        T_toLeftCam[0:3, 0:3] = R2.T
+        T_toLeftCam[3, 3] = 1
+        xyz_rectified = np.dot(T_toLeftCam, xyz_rectified)
+
+        xyz_rectified = xyz_rectified/xyz_rectified[3]
+        tool_depth = xyz_rectified[2]
+        # tool_depth = 1
+        cv2.imshow('Matched LeftImg', leftImg_[r_box[1]:r_box[3], u_l-(r_box[2]-r_box[0]):u_l,])
+    else:
+        print('no valid depth estimation ! The predicted bbox is out of the image.')
+        tool_depth = -1
+
+    return tool_depth
+
+def RectErrorCal(pt, bbox):
+    """
+    Calculate the min distance from one point to a rect contour (outside the rect)
+       Input:
+       pt: the coordinates of a point (x, y)
+       bbox: the rect points (top-left, bottom-right)
+       Returns the error in x, y axis
+    Here we seperate the area into 8 areas:
+    1  |  2  | 3
+    --------------
+    4  |  0  | 5
+    --------------
+    6  /  7  / 8
+    """
+    pt_x = pt[0]
+    pt_y = pt[1]
+    x1 = bbox[0]
+    y1 = bbox[1]
+    x2 = bbox[2]
+    y2 = bbox[3]
+    if (pt_x > 0 and pt_x < x1) and (pt_y > 0 and pt_y < y1):
+        x_error = pt_x - x1
+        y_error = pt_y - y1
+    elif (pt_x > x1 and pt_x < x2) and (pt_y > 0 and pt_y < y1):
+        x_error = 0
+        y_error = pt_y - y1
+    elif (pt_x > x2) and (pt_y > 0 and pt_y < y1):
+        x_error = pt_x - x2
+        y_error = pt_y - y1
+    elif (pt_x > 0 and pt_x < x1) and (pt_y > y1 and pt_y < y2):
+        x_error = pt_x - x1
+        y_error = 0
+    # elif (pt_x > x1 and pt_x < x2) and (pt_y > y1 and pt_y < y2):
+    #     x_error = 0
+    #     y_error = 0
+    elif (pt_x > x2) and (pt_y > y1 and pt_y < y2):
+        x_error = pt_x - x2
+        y_error = 0
+    elif (pt_x > 0 and pt_x < x1) and (pt_y > y2):
+        x_error = pt_x - x1
+        y_error = pt_y - y2
+    elif (pt_x > x1 and pt_x < x2) and (pt_y > y2):
+        x_error = 0
+        y_error = pt_y - y2
+    elif (pt_x > x2) and (pt_y > y2):
+        x_error = pt_x - x2
+        y_error = pt_y - y2
+    else:
+        x_error = 0
+        y_error = 0
+
+    return x_error, y_error
+
+def DepthActionCal(depth, minmax):
+    """
+    Calculate the [-1, 1] depth action with the setting bound,
+    """
+    reference = (minmax[1] - minmax[0])
+    if depth <= 0 or (depth > minmax[0] and depth < minmax[1]):
+        return 0.0, 0.0
+    else:
+        if depth <= minmax[0]:
+            return (depth - minmax[0]), (depth - minmax[0]) / reference
+        if depth >= minmax[1]:
+            return (depth - minmax[1]), (depth - minmax[1]) / reference
+
+def detect(opt, *args):
+    out, source, weights, view_img, save_txt, imgsz, sort_max_age, sort_min_hits, sort_iou_thresh = \
+        opt.output, opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size, opt.tracker_max_age, opt.tracker_min_hits, opt.tracker_iou_thres
+    save_img = not opt.nosave and not source.endswith('.txt')  # save inference images
+    webcam = source.isnumeric() or source.endswith('.txt') or source.lower().startswith(
+        ('rtsp://', 'rtmp://', 'http://', 'https://'))
+    roscam = source.lower().endswith('image_raw')
+
+    # Initial a tracker
+    trackers = [Tracker() for _ in range(NUM_TOOLS_TO_TRACK)]
+    objects = [Object(num=1) for _ in range(NUM_TOOLS_TO_TRACK)]
+    # tracker1 = Tracker() # track tool1m
+    # tracker2 = Tracker() # track tool2m
+    # tracker3 = Tracker() # track tool3m
+    # tracker4 = Tracker() # track tool4m
+    # tracker5 = Tracker() # track tool5m
+    # object1 = Object(num=10)
+    # object2 = Object(num=10)
+    # object3 = Object(num=10)
+    # object4 = Object(num=10)
+    # object5 = Object(num=10)
+
+    main_tool_depth = KalmanDepthTracker() # filter the main instrument
+    # frame count
+    frame_count = 1
+
+    # Directories
+    device = select_device(opt.device)
+    # if os.path.exists(out):
+    #     shutil.rmtree(out)  # delete output folder
+    if not os.path.exists(out):
+        os.makedirs(out)  # make new output folder
+    half = device.type != 'cpu'  # half precision only supported on CUDA
+
+    # Load model
+    model = attempt_load(weights, map_location=device)  # load FP32 model
+    stride = int(model.stride.max())  # model stride
+    imgsz = check_img_size(imgsz, s=stride)  # check img_size
+    if half:
+        model.half()  # to FP16
+
+    # Set Dataloader
+    vid_path, vid_writer = None, None
+    # if webcam:
+    #     view_img = True
+    #     cudnn.benchmark = True  # set True to speed up constant image size inference
+    #     dataset = LoadStreams(source, img_size=imgsz, stride=stride)
+    # elif roscam:
+    #     dataset = LoadRosImages(source, img_size=imgsz, stride=stride)
+    # else:
+    #     dataset = LoadImages(source, img_size=imgsz, stride=stride)
+
+    # Get names and colors
+    names = model.module.names if hasattr(model, 'module') else model.names
+    colors = [[random.randint(0, 255) for _ in range(3)] for _ in names]
+    yolobbox_colors = colors
+    # colors = [[196, 173, 4], [253, 238, 123], [0, 200, 67], [99, 249, 138], [194, 33, 251], [214, 108, 251]] # filter bbox color + trajectory
+    # yolobbox_colors = [[0, 0, 0], [0, 255, 255], [0, 0, 0], [255, 0, 0], [0, 0, 0], [0, 0, 255]]
+
+    # Run inference
+    if device.type != 'cpu':
+        model(torch.zeros(1, 3, imgsz, imgsz).to(device).type_as(next(model.parameters())))  # run once
+    t0 = time.time()
+    # for path, img, im0s, vid_cap in dataset:
+    path = None
+    vid_cap = None
+    count = 1
+    is_out_rect = False
+    # record the max distance when the tool is out of the bbox
+    x_e_max = 0
+    y_e_max = 0
+    # global l_bbox, tool_depth_in_thread
+    while not rospy.is_shutdown():
+        try:
+            with torch.no_grad():
+
+                # print(type(img_LR_src))
+                # W, H = img_LR_src.shape[:2]
+                # L_Img = img_LR_src[:, :int(H/2), :]
+                # R_Img = img_LR_src[:, int(H/2):, :]
+                t_start = time.time()
+
+                L_Img = img_L_src.copy()
+                # R_Img = img_R_src.copy()
+
+                # left, right, R1, R2, Q, map2_1 = undistort_stereo(L_Img, R_Img)
+                t_dist = time.time()
+
+                # Padded resize
+                # imgR = letterbox(right, 640, 32)[0]
+                imgL = letterbox(left, 640, 32)[0]
+
+                # Convert
+                # imgR = imgR[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB, to 3x416x416
+                # imgR = np.ascontiguousarray(imgR)
+                imgL = imgL[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB, to 3x416x416
+                imgL = np.ascontiguousarray(imgL)
+                # imgR = imgR[:, :, ::-1]  # BGR to RGB, to 3x416x416
+                # imgR = np.ascontiguousarray(imgR)
+                # imgL = imgL[:, :, ::-1]  # BGR to RGB, to 3x416x416
+                # imgL = np.ascontiguousarray(imgL)
+
+                # merge into one batch
+                # img = np.stack((imgR, imgL), axis=0)
+                # img = imgL #imgR # use the right frame for detection
+                # print('img shape: ', imgR.shape)
+                # img = L_Img
+                # im0s = right.copy()
+                im0s = left.copy()
+
+                # left, right, R1, Q = undistort_stereo(L_Img,R_Img)
+
+                img = torch.from_numpy(imgL).to(device)
+                # img = img.permute((2, 0, 1))
+                img = img.half() if half else img.float()  # uint8 to fp16/32
+                img /= 255.0  # 0 - 255 to 0.0 - 1.0
+                if img.ndimension() == 3:
+                    img = img.unsqueeze(0)
+                ###############################################################
+                # Inference
+                t1 = time_synchronized()
+                pred = model(img, augment=opt.augment)[0]
+
+                # Apply NMS
+                pred = non_max_suppression(pred, opt.conf_thres, opt.iou_thres, classes=opt.classes, agnostic=opt.agnostic_nms)
+                t2 = time_synchronized()
+                print('names: ', names)
+                print('Prediction Done.', (t2 - t1), 's')
+                print('pred shape: ', len(pred))
+
+                # Process detections
+                for i, det in enumerate(pred):  # detections per image
+                    s = ''
+                    im0 = im0s
+
+                    # p = Path(p)  # to Path
+                    # save_path = str(Path(out) / p.name)  # img.jpg
+                    s += '%gx%g ' % img.shape[2:]  # print string
+                    gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
+                    if len(det):
+                        # Rescale boxes from img_size to im0 size
+                        det[:, :4] = scale_coords(img.shape[2:], det[:, :4], im0.shape).round()
+
+                        # Print results
+                        for c in det[:, -1].unique():
+                            n = (det[:, -1] == c).sum()  # detections per class
+                            s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
+
+                        # Write results
+                        for *xyxy, conf, cls in reversed(det):
+                            if save_img or view_img:  # Add bbox to image
+                                label = f'{names[int(cls)]} {conf:.2f}'
+                                plot_one_box(xyxy, im0, label=label, color=yolobbox_colors[int(cls)], line_thickness=3)
+
+                    dets_to_track = [np.empty((0, 5)) for _ in range(NUM_TOOLS_TO_TRACK)]
+
+                    # Pass the detection to the Kalman filter
+                    for x1, y1, x2, y2, conf, detclass in det.cpu().detach().numpy():
+                        # dets_to_track[int(detclass) // 2 - 1] = np.vstack((dets_to_track[int(detclass) // 2 - 1], np.array([x1, y1, x2, y2, conf])))
+                        if int(detclass) == 2:
+                            dets_to_track[0] = np.vstack((dets_to_track[0], np.array([x1, y1, x2, y2, conf])))
+                        if int(detclass) == 4:
+                            dets_to_track[1] = np.vstack((dets_to_track[1], np.array([x1, y1, x2, y2, conf])))
+                        if int(detclass) == 6:
+                            dets_to_track[2] = np.vstack((dets_to_track[2], np.array([x1, y1, x2, y2, conf])))
+                        if int(detclass) == 14:
+                            dets_to_track[3] = np.vstack((dets_to_track[3], np.array([x1, y1, x2, y2, conf])))
+                        if int(detclass) == 10:
+                            dets_to_track[4] = np.vstack((dets_to_track[4], np.array([x1, y1, x2, y2, conf])))
+
+                    # print('Input into SORT:\n', dets_to_track, '\n')
+                    # Run the Kalman filter
+                    # need to left one observation (choose the best fit one)
+                    # If the main instrument is detected for the first time, we need to initialize the Kalman filter
+                    ms = [-1] * NUM_TOOLS_TO_TRACK
+                    tracked_dets = []
+                    for i in range(NUM_TOOLS_TO_TRACK):
+                        ms[i], tracked_det = trackers[i].update(dets_to_track[i])
+                        tracked_dets.append(tracked_det)
+                        trackers[i].update_bbox_heatmap(tracked_det)
+                        objects[i].update(tracked_det)
+
+                    # TODO: Need to match the other unmatched detected objects
+                    # Here we regard they only as the binary labels
+                    # m_all = [m1, m2, m3, m4, m5]
+                    left_matches = np.empty((0, 5))
+                    left_trackers = []
+                    left_object = []
+                    for i, m in enumerate(ms):
+                        if m == -1:
+                            left_matches = np.vstack((left_matches, dets_to_track[i]))
+                            left_trackers.append(trackers[i])
+                            left_object.append(objects[i])
+                        else:
+                            left_matches = np.vstack((left_matches, np.delete(dets_to_track[i], m, axis=0)))
+
+                    # TODO: Need to match the other unmatched detected objects
+                    print('left matches: ', left_matches, 'len of left tracker: ', len(left_trackers))
+                    matched_bbox, matched_tracker, matched_object = re_associate_detections_to_trackers(left_matches, left_trackers, left_object, iou_threshold = 0.3)
+                    print('len of matched tracker: ', len(matched_tracker))
+                    for i in range(len(matched_bbox)):
+                        m_temp, tracked_dets_temp = matched_tracker[i].update(matched_bbox[i].reshape((1, 5)))
+                        matched_tracker[i].update_bbox_heatmap(tracked_dets_temp)
+                        matched_object[i].update(tracked_dets_temp) # BUG here, the order is not consistent, SOLVED~
+
+                    t3 = time_synchronized()
+                    print(f'{s}Track Done. ({t3 - t2:.3f}s)')
+
+                    # object.update(tracked_dets[0, :4] if len(tracked_dets) > 0 else np.empty((0, 5))) # TODO
+                    # calculate the depth
+                    # l_bbox = tracker2.cur_bbox[:4]
+                    l_bbox = trackers[main_tool_id].cur_bbox[:4]
+                    if trackers[main_tool_id].cur_bbox_flag is True: #  and system_version >= 2
+                        # previous: 0.030s
+                        # tool_depth = SteroTempleteDepthCal_left(rightImg=right, l_bbox=l_bbox, leftImg=left, R1=R1, Q=Q)
+                        # current: 0.001s
+                        tool_depth = StereoDepth_left(rightImg=right, l_bbox=l_bbox, leftImg=left, R1=R1, Q=Q)
+                    else:
+                        print('no valid depth estimation ! The current bbox is the previous one.')
+                        tool_depth = -1
+
+                    d1, filter_depth = main_tool_depth.update(tool_depth)
+                    # filter_depth = -1
+                    print('Filtered depth: ', filter_depth)
+                    # print('thread depth: ', tool_depth_in_thread)
+                    # print('Output from SORT:\n',tracked_dets,'\n')
+                    t4 = time_synchronized()
+                    print(f'{s}Depth Done. ({t4 - t3:.3f}s)')
+
+                    for i in range(NUM_TOOLS_TO_TRACK):
+                        if (save_img or view_img) and len(tracked_dets[i]) > 0:  # Add bbox to image + Add trajectory to image
+                            score = 0 if ms[i] == -1 else 1
+                            # label = f'{names[2*i+1]} {score:1d}' # since the toolXs,m the main is in 1, 3, 5, 7, 9
+                            label = f'{names[2*i+2]} {score:1d}' # since the toolXs,m the main is in 2, 4, 6, 8, 10
+                            plot_one_box(tracked_dets[i][:4], im0, label=label, color=colors[i], line_thickness=3)
+                            objects[i].plot(im0, color=colors[i])
+                            objects[i].plot_undistort(L_Img, color=colors[i], map=map1_1)
+
+                    # if (save_img or view_img) and len(tracked_dets1) > 0:  # Add bbox to image + Add trajectory to image
+                    #     score = 0 if m1 == -1 else 1
+                    #     label = f'{names[int(1)]} {score:1d}'
+                    #     plot_one_box(tracked_dets1[:4], im0, label=label, color=colors[int(0)], line_thickness=3)
+                    #     object1.plot(im0, color=colors[int(0)])
+                    #     object1.plot_undistort(R_Img, color=colors[int(1)], map=map2_1)
+                    # if (save_img or view_img) and len(tracked_dets2) > 0:  # Add bbox to image + Add trajectory to image
+                    #     score = 0 if m2 == -1 else 1
+                    #     label = f'{names[int(3)]} {score:1d}'
+                    #     plot_one_box(tracked_dets2[:4], im0, label=label, color=colors[int(1)], line_thickness=3)
+                    #     object2.plot(im0, color=colors[int(1)])
+                    #     object2.plot_undistort(R_Img, color=colors[int(3)], map=map2_1)
+                    # if (save_img or view_img) and len(tracked_dets3) > 0:  # Add bbox to image + Add trajectory to image
+                    #     score = 0 if m3 == -1 else 1
+                    #     label = f'{names[int(5)]} {score:1d}'
+                    #     plot_one_box(tracked_dets3[:4], im0, label=label, color=colors[int(2)], line_thickness=3)
+                    #     object3.plot(im0, color=colors[int(2)])
+                    #     object3.plot_undistort(R_Img, color=colors[int(3)], map=map2_1)
+                    # if (save_img or view_img) and len(tracked_dets4) > 0:  # Add bbox to image + Add trajectory to image
+                    #     score = 0 if m4 == -1 else 1
+                    #     label = f'{names[int(7)]} {score:1d}'
+                    #     plot_one_box(tracked_dets4[:4], im0, label=label, color=colors[int(3)], line_thickness=3)
+                    #     object4.plot(im0, color=colors[int(3)])
+                    #     object4.plot_undistort(R_Img, color=colors[int(3)], map=map2_1)
+                    # if (save_img or view_img) and len(tracked_dets5) > 0:  # Add bbox to image + Add trajectory to image
+                    #     score = 0 if m5 == -1 else 1
+                    #     label = f'{names[int(9)]} {score:1d}'
+                    #     plot_one_box(tracked_dets5[:4], im0, label=label, color=colors[int(4)], line_thickness=3)
+                    #     object5.plot(im0, color=colors[int(4)])
+                    #     object5.plot_undistort(R_Img, color=colors[int(3)], map=map2_1)
+
+                    # reference control rect
+                    # x1y1x2y2 = [120, 120, 520, 360]
+                    bbox_w = 4
+                    bbox_h = 3
+                    interval_x = bbox_w * bbox_scale #3.2#3.5 # need < 8 parts
+                    interval_y = bbox_h * bbox_scale #2.4#4.0
+                    # inner_x = interval_x + 4.5
+                    # inner_y = interval_y + 2.0
+                    part = 40 # totally 16 parts, WIDTH:16*HEIGHT:12
+                    interval_W = 16
+                    interval_H = 12
+
+                    x1y1x2y2 = [int(interval_x*part), int(interval_y*part), 640-int(interval_x*part), 480-int(interval_y*part)]
+                    # x1y1x2y2_inner = [int(inner_x*part), int(inner_y*part), 640-int(inner_x*part), 480-int(inner_y*part)]
+
+                    # depth_minmax = [mid_depth - 25, mid_depth + 25] # middle: 75 -- [50, 100]
+                    # depth_minmax_inner = [mid_depth - 15, mid_depth + 15] # 75 -- [60, 90]
+                    depth_minmax = [mid_depth - mid_range/2, mid_depth + mid_range/2] # middle: 75 -- [50, 100]
+                    depth_minmax_inner = [mid_depth - mid_range/2 * 0.5, mid_depth + mid_range/2 * 0.5] # 75 -- [60, 90]
+
+                    # draw some notions to indicate whether it is located in the reference window
+                    # the reference window need to be update
+                    if is_out_rect is True:
+                        # need to update the target bbox according to the reference position
+                        # ADDing
+                        # calculate the distance signal
+                        # error: to a fixed bbox, need to get the max error to calculate the target position
+                        try:
+                            if len(objects[main_tool_id].undistorted_center) > 0 and trackers[main_tool_id].cur_bbox_flag is True:
+                                x_e, y_e = RectErrorCal(objects[main_tool_id].undistorted_center[0,:], bbox=x1y1x2y2) # x1y1x2y2 is a fixed bbox
+                                x_e = abs(x_e)
+                                y_e = abs(y_e)
+                                x_e_max = x_e if x_e > x_e_max else x_e_max
+                                y_e_max = y_e if y_e > y_e_max else y_e_max
+                                # fit the inner bbox automatically
+                                Ex_min = 0.2 * part #* bbox_scale
+                                Ex_max = (interval_W/4 - 1) * part #* bbox_scale
+                                Ey_min = 0.2 * part #* bbox_scale
+                                Ey_max = (interval_H/4 - 1) * part #* bbox_scale
+                                # Linear
+                                # scale_x = np.clip((x_e_max - Ex_min)/(Ex_max - Ex_min) * 0.9, 0.2, 0.9)
+                                # scale_y = np.clip((y_e_max - Ey_min)/(Ey_max - Ey_min) * 0.9, 0.2, 0.9)
+                                # Non-Linear
+                                scale_x = np.clip((np.exp((x_e_max - Ex_min)*np.log(2)/(Ex_max - Ex_min)) - 1) * 0.9, 0.2, 0.9)
+                                scale_y = np.clip((np.exp((y_e_max - Ey_min)*np.log(2)/(Ey_max - Ey_min)) - 1) * 0.9, 0.2, 0.9)
+
+                                unified_scale = np.max((scale_x, scale_y))
+                                if unified_scale > 0.35:
+                                    whether_visualize_msg.data = True
+                                print("DEBUG: unified_scale: ", unified_scale)
+                                inner_x = interval_x + (interval_W/2 - interval_x) * unified_scale
+                                inner_y = interval_y + (interval_H/2 - interval_y) * unified_scale
+
+                                x1y1x2y2_inner = [int(inner_x*part), int(inner_y*part), 640-int(inner_x*part), 480-int(inner_y*part)]
+                        except UnboundLocalError:
+                            # if the x1y1x2y2_inner is not initialized
+                            inner_x = interval_x + (interval_W/2 - interval_x) * 0.2
+                            inner_y = interval_y + (interval_H/2 - interval_y) * 0.2
+                            x1y1x2y2_inner = [int(inner_x*part), int(inner_y*part), 640-int(inner_x*part), 480-int(inner_y*part)]
+                        dst_window = x1y1x2y2_inner
+                        dst_depth = depth_minmax_inner
+                    else: # start with the larger bbox as reference
+                        x_e_max, y_e_max = 0, 0
+                        whether_visualize_msg.data = False
+                        # if the x1y1x2y2_inner is not initialized
+                        inner_x = interval_x + (interval_W/2 - interval_x) * 0.2
+                        inner_y = interval_y + (interval_H/2 - interval_y) * 0.2
+                        x1y1x2y2_inner = [int(inner_x*part), int(inner_y*part), 640-int(inner_x*part), 480-int(inner_y*part)]
+                        dst_window = x1y1x2y2
+                        dst_depth = depth_minmax
+
+                    # cv2.rectangle(im0, (x1y1x2y2[0], x1y1x2y2[1]), (x1y1x2y2[2], x1y1x2y2[3]), (255, 255, 255), thickness=1, lineType=cv2.LINE_AA)
+                    # cv2.rectangle(im0, (x1y1x2y2_inner[0], x1y1x2y2_inner[1]), (x1y1x2y2_inner[2], x1y1x2y2_inner[3]), (0, 255, 255), thickness=1, lineType=cv2.LINE_AA)
+
+                    cv2.rectangle(L_Img, (x1y1x2y2[0], x1y1x2y2[1]), (x1y1x2y2[2], x1y1x2y2[3]), (255, 255, 255), thickness=1, lineType=cv2.LINE_AA)
+                    cv2.rectangle(L_Img, (x1y1x2y2_inner[0], x1y1x2y2_inner[1]), (x1y1x2y2_inner[2], x1y1x2y2_inner[3]), (0, 255, 255), thickness=1, lineType=cv2.LINE_AA)
+
+                    if len(objects[main_tool_id].undistorted_center) > 0 and trackers[main_tool_id].cur_bbox_flag is True:
+                        print("debug: ", objects[main_tool_id].undistorted_center, objects[main_tool_id].center)
+                        if (objects[main_tool_id].undistorted_center[0, 0] > dst_window[0] and objects[main_tool_id].undistorted_center[0, 0] < dst_window[2]) \
+                        and (objects[main_tool_id].undistorted_center[0, 1] > dst_window[1] and objects[main_tool_id].undistorted_center[0, 1] < dst_window[3]) \
+                        and (filter_depth > dst_depth[0] and filter_depth < dst_depth[1]):
+                            cv2.rectangle(im0, (0, 0), (640, 480), (0, 255, 0), 8) # already in the proper view
+                            cv2.rectangle(L_Img, (0, 0), (640, 480), (0, 255, 0), 8) # already in the proper view
+                            ctrl_mode = 'Zero'
+                            x_error = y_error = z_error = 0
+                            x_action = y_action = z_action = 0
+                            is_out_rect = False # current is within reference bbox
+                        else:
+                            cv2.rectangle(im0, (0, 0), (640, 480), (0, 0, 255), 8)
+                            # out of the proper view
+                            if objects[main_tool_id].radius < 10:
+                                objects[main_tool_id].ctrl_cnt += 1
+                            else:
+                                objects[main_tool_id].ctrl_cnt = 0
+
+                            if objects[main_tool_id].ctrl_cnt > 30:
+                                ctrl_mode = 'Fast'
+                            else:
+                                ctrl_mode = 'Slow'
+
+                            # calculate the action command
+                            x_error, y_error = RectErrorCal(objects[main_tool_id].undistorted_center[0,:], bbox=dst_window)
+                            z_error, z_action = DepthActionCal(filter_depth, minmax=dst_depth)
+                            x_action = x_error / 640
+                            y_action = y_error / 480
+                            is_out_rect = True # act as a flag: leave current the large bbox, we need to update the bbox
+
+                    else:# no detection, need to keep static
+                        ctrl_mode = 'Zero'
+                        x_error = y_error = z_error = 0
+                        x_action = y_action = z_action = 0
+                        cv2.rectangle(im0, (0, 0), (640, 480), (0, 0, 255), 8)
+
+                    time_publish_start = time.time()
+                    # publish the control signals
+                    x_action = np.clip(x_action * 10, a_min=-1, a_max=1)
+                    y_action = np.clip(y_action * 10, a_min=-1, a_max=1)
+                    z_action = np.clip(z_action, a_min=-1, a_max=1)
+                    pred_action_msg = Vector3(-x_action, -y_action, -z_action)
+                    pred_action_pub.publish(pred_action_msg)
+
+                    # publish the white/yellow bbox info
+                    height, width = L_Img.shape[:2]
+                    white_bbox_msg.cx = (x1y1x2y2[0] + x1y1x2y2[2])/2/width
+                    white_bbox_msg.cy = (x1y1x2y2[1] + x1y1x2y2[3])/2/height
+                    white_bbox_msg.w = (x1y1x2y2[2] - x1y1x2y2[0])/width
+                    white_bbox_msg.h = (x1y1x2y2[3] - x1y1x2y2[1])/height
+                    whitebbox_refer_pub.publish(white_bbox_msg)
+                    yellow_bbox_msg.cx = (x1y1x2y2_inner[0] + x1y1x2y2_inner[2])/2/width
+                    yellow_bbox_msg.cy = (x1y1x2y2_inner[1] + x1y1x2y2_inner[3])/2/height
+                    yellow_bbox_msg.w = (x1y1x2y2_inner[2] - x1y1x2y2_inner[0])/width
+                    yellow_bbox_msg.h = (x1y1x2y2_inner[3] - x1y1x2y2_inner[1])/height
+                    yellowbbox_refer_pub.publish(yellow_bbox_msg)
+                    # publish whether to visulize bbox
+                    whetherbbox_visualize_pub.publish(whether_visualize_msg)
+
+                    # publish the tool depth info
+                    tool_depth_msg = Float64(filter_depth / 1000) # convert mm into m
+                    tool_depth_pub.publish(tool_depth_msg)
+
+                    # publish the L/R images
+                    if pub_LR_imgs_flag:
+                        if image_L is not None and image_R is not None:
+                            rz_LR_Img_1080p = cv2.hconcat([image_L, image_R])
+                            ros_LRImg = bridge.cv2_to_imgmsg(rz_LR_Img_1080p, "bgr8")
+                            ros_LRImg.header.stamp = rospy.Time.now()
+                            LR_imgs_pub.publish(ros_LRImg)
+
+                    # if record_videos_flag:
+                    #     # if image_L is not None:
+                    #     video_L.write(image_L)
+                    #     # if image_R is not None:
+                    #     video_R.write(image_R)
+
+                    # publish the tool position info
+                    pred_positions_msg = []
+                    for i in range(NUM_TOOLS_TO_TRACK):
+                        # i = 0
+                        if len(objects[i].undistorted_center) > 0 and len(tracked_dets[i]) > 0:
+                            pred_position_msg = Vector3(objects[i].undistorted_center[0, 0], objects[i].undistorted_center[0, 1], -1)
+                        else:
+                            pred_position_msg = Vector3(-1, -1, -1)
+                        pred_position_tools_pub[i].publish(pred_position_msg)
+
+                    time_publish_end = time.time()
+                    print('------------------------ before putblish time ---------------', time_publish_start - t4)
+
+                    # Stream results
+                    if view_img:
+                        # frame_count_ = f'Frame: {frame_count:d}'
+                        # tool_depth_ = f'Depth: {tool_depth:.2f}mm'
+                        filter_tool_depth_ = f'Depth: {filter_depth:.2f}mm'
+                        fps_count_ = f'FPS: {1/(t4 - t1):.1f}'
+                        # cv2.putText(im0, frame_count_, (40, 40), 0, 0.5, [225, 255, 255], thickness=1,
+                        #             lineType=cv2.LINE_AA)
+                        # cv2.putText(im0, filter_tool_depth_, (260, 40), 0, 0.5, [225, 255, 255], thickness=1,
+                        #             lineType=cv2.LINE_AA)
+                        # cv2.putText(im0, fps_count_, (160, 40), 0, 0.5, [225, 255, 255], thickness=1,
+                        #             lineType=cv2.LINE_AA)
+
+                        # cv2.putText(L_Img, frame_count_, (40, 40), 0, 0.5, [225, 255, 255], thickness=1,
+                        #             lineType=cv2.LINE_AA)
+                        cv2.putText(L_Img, filter_tool_depth_, (260, 40), 0, 0.5, [225, 255, 255], thickness=1,
+                                    lineType=cv2.LINE_AA)
+                        cv2.putText(L_Img, fps_count_, (160, 40), 0, 0.5, [225, 255, 255], thickness=1,
+                                    lineType=cv2.LINE_AA)
+
+                        cv2.imshow('results', im0)
+                        # cv2.imshow('R_Img', R_Img)
+                        # L_Img_rsz = cv2.resize(L_Img, (1920, 1080))
+                        cv2.imshow('L_Img', L_Img)
+
+                        cv2.imshow('R_Img_Dis', right)
+                        cv2.imshow('L_Img_Dis', left)
+                        cv2.waitKey(1)  # 1 millisecond
+                        frame_count += 1
+
+                        t_end = time.time()
+
+                        print('total time in a loop: {}, dist: {}, pre-process: {}, yolo: {}, track: {}, depth: {}, plot_o: {}, publish: {}, view: {}'.format(t_end - t_start, t_dist-t_start, t1-t_dist, t2-t1,
+                                                                                                                             t3-t2, t4-t3, time_publish_start-t4, time_publish_end-time_publish_start, t_end - time_publish_end))
+                    # count += 1
+                    # if count % 2 == 0:
+                    #     cv2.imshow('results1', im0)
+                    # if count % 2 == 1:
+                    #     cv2.imshow('results2', im0)
+                    # Save results (image with detections)
+                    # if save_img:
+                    #     if dataset.mode == 'image':
+                    #         cv2.imwrite(save_path, im0)
+                    #     else:  # 'video' or 'stream'
+                    #         if vid_path != save_path:  # new video
+                    #             vid_path = save_path
+                    #             if isinstance(vid_writer, cv2.VideoWriter):
+                    #                 vid_writer.release()  # release previous video writer
+                    #             if vid_cap:  # video
+                    #                 fps = vid_cap.get(cv2.CAP_PROP_FPS)
+                    #                 w = int(vid_cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+                    #                 h = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+                    #             else:  # stream
+                    #                 fps, w, h = 30, im0.shape[1], im0.shape[0]
+                    #                 save_path += '.mp4'
+                    #             vid_writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
+                    #         vid_writer.write(im0)
+
+        # except TypeError:
+        #     print('no data from camera')
+        #     continue
+        # except AttributeError:
+        #     print('no data from camera')
+        #     continue
+        except cv2.error:
+            print('cv2 error')
+            continue
+        # except IndexError:
+        #     print('Index error: no matching!')
+        #     continue
+        else:
+            continue
+
+    if record_videos_flag:
+        video_L.release()
+        video_R.release()
+        print('-----------------------release L/R video ...')
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--weights', nargs='+', type=str, default='yolov5s.pt', help='model.pt path(s)')
+    parser.add_argument('--source', type=str, default='data/images', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--output', type=str, default='inference/output', help='output folder')  # output folder
+    parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
+    parser.add_argument('--conf-thres', type=float, default=0.25, help='object confidence threshold')
+    parser.add_argument('--iou-thres', type=float, default=0.45, help='IOU threshold for NMS')
+    parser.add_argument('--fourcc', type=str, default='mp4v', help='output video codec (verify ffmpeg support)')
+    parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
+    parser.add_argument('--view-img', action='store_true', help='display results')
+    parser.add_argument('--save-txt', action='store_true', help='save results to *.txt')
+    parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
+    parser.add_argument('--nosave', action='store_true', help='do not save images/videos')
+    parser.add_argument('--classes', nargs='+', type=int, help='filter by class: --class 0, or --class 0 2 3')
+    parser.add_argument('--agnostic-nms', action='store_true', help='class-agnostic NMS')
+    parser.add_argument('--augment', action='store_true', help='augmented inference')
+    parser.add_argument('--update', action='store_true', help='update all models')
+    parser.add_argument('--project', default='runs/detect', help='save results to project/name')
+    parser.add_argument('--name', default='exp', help='save results to project/name')
+    parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
+
+    # Tracker settings
+    parser.add_argument('--tracker-max-age', type=int, default=5,
+                        help='keep track of object even if object is occluded or not detected in n frames')
+    parser.add_argument('--tracker-min-hits', type=int, default=2,
+                        help='start tracking only after n number of objects detected')
+    parser.add_argument('--tracker-iou-thres', type=float, default=0.2,
+                        help='intersection-over-union threshold between two frames for association')
+    opt = parser.parse_args()
+
+    print(opt)
+
+    with torch.no_grad():
+        detect(opt)
