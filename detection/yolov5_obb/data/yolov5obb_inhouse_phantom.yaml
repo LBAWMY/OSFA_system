@@ -1,0 +1,13 @@
+# Train/val/test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
+path: ./dataset # dataset root dir
+train: dataset_inhouse_phantom/train/images # train images (relative to 'path')
+val: dataset_inhouse_phantom/val/images   # val images (relative to 'path')
+#test: dataset_demo/images  # test images (optional)
+
+# Classes
+nc: 14  # number of classes
+names: [ 'tool1s', 'tool1m', 'tool2s', 'tool2m', 'tool3s', 'tool3m', 'tool4s', 'tool4m', 'tool5s', 'tool5m',
+         'tool6s', 'tool6m', 'tool7s', 'tool7m'] # class names
+
+# Download script/URL (optional)
+# download: https://ultralytics.com/assets/coco128.zip
