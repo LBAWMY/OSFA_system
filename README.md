@@ -1,6 +1,7 @@
-# OSFA_system
+# One-Surgical-Four-Arm system
 
-One-Surgical-Four-Arms system for robotic-assisted hysterectomy. This repository contains the workflows for calibration, YOLO-based tool detection, and real-time robotic control used during cadaveric experiments.
+AI-empowered one-surgeon-four-arm robotic system that enables one surgeon to perform a complete hysterectomy (79mins) independently for the first time. 
+This repository contains the workflows for calibration, real-time multi-instrument tracking, and human-in-the-loop laparoscope/uterus control.
 
 ---
 
@@ -15,8 +16,9 @@ One-Surgical-Four-Arms system for robotic-assisted hysterectomy. This repository
 ### Software
 
 * **Framework:** ROS Melodic / Python 3.8.
-* **Vision:** YOLOv5 (Stereo matching and monocular tracking).
 * **Calibration:** OpenCV (Python) and MATLAB Camera Calibrator.
+* **Vision:** Multi-instrument tracking.
+* **Semi-automatic robot control:** Control strategy and low-level controller for robotic laparoscope and uterus manipulator.
 
 ---
 
