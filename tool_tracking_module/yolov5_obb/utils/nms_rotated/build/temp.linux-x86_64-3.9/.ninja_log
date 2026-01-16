@@ -1,0 +1,5 @@
+# ninja log v5
+0	4492	1651996918	/home/curl/CUHK/Projects/yolov5_obb/utils/nms_rotated/build/temp.linux-x86_64-3.9/src/nms_rotated_cpu.o	ddfbd0db9d542cdc
+0	9494	1651996923	/home/curl/CUHK/Projects/yolov5_obb/utils/nms_rotated/build/temp.linux-x86_64-3.9/src/poly_nms_cuda.o	82fbf0453c071774
+0	10723	1651996924	/home/curl/CUHK/Projects/yolov5_obb/utils/nms_rotated/build/temp.linux-x86_64-3.9/src/nms_rotated_cuda.o	2cf28c33bc9ac407
+0	12210	1651996925	/home/curl/CUHK/Projects/yolov5_obb/utils/nms_rotated/build/temp.linux-x86_64-3.9/src/nms_rotated_ext.o	1f59adbbf2ec6715
