@@ -4,11 +4,11 @@ This module implements surgical phase recognition for laparoscopic hysterectomy,
 
 ## Introduction
 
-The Trans-SVNet implementation is adapted from the project: [Trans-SVNet](https://github.com/xjgaocs/Trans-SVNet). You can refer to it for training details and pipeline.
+The phase recognition model is adapted from the project [Trans-SVNet](https://github.com/xjgaocs/Trans-SVNet). You can refer to it for training details and pipeline.
 
-Here we provide training weights on the AutoLaparo dataset. The AutoLaparo dataset can be requested and downloaded from [autolaparo.github.io](https://autolaparo.github.io/).
+Here we provide training weights and inference implementation on the AutoLaparo dataset. The AutoLaparo dataset can be requested and downloaded from [autolaparo.github.io](https://autolaparo.github.io/).
 
-You can run a quick demo inference with `run.py`.
+You can run the inference with `run.py`.
 
 ## Usage
 
