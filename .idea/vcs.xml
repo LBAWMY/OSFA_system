@@ -2,5 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Robot_control_interface/qt_gui/superqt" vcs="Git" />
   </component>
 </project>
