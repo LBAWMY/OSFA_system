@@ -1,0 +1,11 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# IDE
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
