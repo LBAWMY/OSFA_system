@@ -2,6 +2,8 @@
 
 AI-powered robotic surgical system enabling single-surgeon hysterectomy operations. Integrates stereo vision tracking, multi-instrument control, and semi-automatic laparoscope positioning.
 
+🌐 **Project Page:** [https://lbawmy.github.io/osfa/](https://lbawmy.github.io/osfa/)
+
 ---
 
 ## 📋 System Overview
