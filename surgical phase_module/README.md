@@ -32,18 +32,9 @@ Frame  Phase
 Notes:
 
 - Labels in txt are **1-based** (Phase starts from 1). The script will convert them to **0-based** internally to match model prediction indices.
+- Put the model checkpoints in the `./model/` folder.
 
-### 2) Prepare model checkpoints
-
-By default the script expects these paths:
-
-- `./model/embedding.pth` (embedding checkpoint)
-- `./model/TeCNO.pth` (TeCNO checkpoint)
-- `./model/TeCNO_Trans.pth` (Transformer checkpoint)
-
-If your checkpoints are elsewhere, pass them with arguments below.
-
-### 3) Run
+### 2) Run
 
 From repo root:
 
