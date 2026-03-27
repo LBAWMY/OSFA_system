@@ -214,7 +214,7 @@ rosnode cleanup
 
 ## 📝 Notes
 
-- Always run workspace initialization (`6`) before operation
+- Always run workspace initialization before operation
 - Maintain calibration error < 0.1 pixels for best performance
 - Some scripts (main.py, calibration helpers) located in separate repos
 
