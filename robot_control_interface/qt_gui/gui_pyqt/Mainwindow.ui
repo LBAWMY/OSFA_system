@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QWidget" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1920</width>
+    <height>1080</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Automatic Camera Control System</string>
+  </property>
+  <widget class="QLabel" name="label_img_show">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1440</width>
+     <height>810</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <underline>false</underline>
+     <kerning>false</kerning>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_start">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>810</y>
+     <width>89</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Start</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_end">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>810</y>
+     <width>89</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>End</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_control">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>810</y>
+     <width>89</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TestJoyCtrl</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton_end</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pushButton_end_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>914</x>
+     <y>429</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>988</x>
+     <y>398</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_start</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pushButton_start_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>904</x>
+     <y>309</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>990</x>
+     <y>277</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_control</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pushButton_Test_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>909</x>
+     <y>531</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>990</x>
+     <y>505</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>pushButton_start_clicked()</slot>
+  <slot>pushButton_end_clicked()</slot>
+  <slot>pushButton_Test_clicked()</slot>
+ </slots>
+</ui>
