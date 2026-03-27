@@ -103,8 +103,9 @@ sudo python3 main.py
 The tool tracking pipeline uses YOLOv5-OBB (Oriented Bounding Box) for real-time multi-tool detection and stereo vision for 3D localization.
 
 **Model Setup:**
-1. Place trained OBB weights (`best.pt`) in `tool_tracking_module/yolov5_obb/runs/train/`
-2. To train a custom model, see [Training Custom Models](#-training-custom-models) below
+1. Trained OBB weights (`best.pt`) are located in `tool_tracking_module/yolov5_obb/runs/train/`
+2. Download the video assets from [Google Drive](https://drive.google.com/drive/folders/1EdWaH4jMvLIYsDY4C-Mk9EUMAoWp_L82?usp=drive_link) and place them in `tool_tracking_module/yolov5_obb/assets/`
+3. To train a custom model, see [Training Custom Models](#-training-custom-models) below
 
 **Run tracking standalone:**
 ```bash
