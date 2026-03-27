@@ -163,8 +163,34 @@ OSFA_system/
 
 ## 🔧 Training Custom Models
 
+**1. Download the dataset** from Zenodo and create the required folder structure:
+
 ```bash
 cd tool_tracking_module/yolov5_obb
+
+# Create dataset directory
+mkdir -p dataset
+
+# Download dataset from Zenodo and extract into the dataset folder
+# https://doi.org/10.5281/zenodo.18875389
+# After downloading, place the contents so the structure looks like:
+```
+
+```
+tool_tracking_module/yolov5_obb/
+└── dataset/
+    └── dataset_inhouse_phantom/
+        ├── train/
+        │   └── images/
+        └── val/
+            └── images/
+```
+
+**2. Train the model:**
+
+```bash
+cd tool_tracking_module/yolov5_obb
+conda activate tracking_env
 python train.py --data ./data/yolov5obb_inhouse_phantom.yaml --epochs 500 --batch-size 32 --img 640 --device 0
 ```
 
