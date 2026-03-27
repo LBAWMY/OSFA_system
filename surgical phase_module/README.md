@@ -1,8 +1,12 @@
-## About this implementation
+# Phase recognition for OSFA system
 
-This repo's Trans-SVNet implementation is adapted from the original project: [xjgaocs/Trans-SVNet](https://github.com/xjgaocs/Trans-SVNet). You can refer to it for **training** details and the original pipeline.
+This module implements surgical phase recognition for hysterectomy, as part of the OSFA system.
 
-Here we provide **training weights on the AutoLaparo dataset**. The AutoLaparo dataset can be requested/downloaded from [autolaparo.github.io](https://autolaparo.github.io/).
+## Introduction
+
+This repo's Trans-SVNet implementation is adapted from the original project: [xjgaocs/Trans-SVNet](https://github.com/xjgaocs/Trans-SVNet). You can refer to it for training details and the original pipeline.
+
+Here we provide training weights on the AutoLaparo dataset. The AutoLaparo dataset can be requested and downloaded from [autolaparo.github.io](https://autolaparo.github.io/).
 
 You can run a quick demo inference with `run.py`.
 
