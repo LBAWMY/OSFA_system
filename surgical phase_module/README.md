@@ -1,24 +1,18 @@
 # Phase recognition for OSFA system
 
-This module implements surgical phase recognition for hysterectomy, as part of the OSFA system.
+This module implements surgical phase recognition for laparoscopic hysterectomy, as part of the OSFA system.
 
 ## Introduction
 
-This repo's Trans-SVNet implementation is adapted from the original project: [xjgaocs/Trans-SVNet](https://github.com/xjgaocs/Trans-SVNet). You can refer to it for training details and the original pipeline.
+The Trans-SVNet implementation is adapted from the project: [Trans-SVNet](https://github.com/xjgaocs/Trans-SVNet). You can refer to it for training details and pipeline.
 
 Here we provide training weights on the AutoLaparo dataset. The AutoLaparo dataset can be requested and downloaded from [autolaparo.github.io](https://autolaparo.github.io/).
 
 You can run a quick demo inference with `run.py`.
 
-## Run `run.py` (single local video inference)
+## Usage
 
-This script runs **frame-level phase prediction** on the video using:
-
-- **Embedding** (ResNet50 spatial embedding)
-- **TeCNO (MS-TCN)** for temporal modeling
-- **Transformer head** (`Transformer2_3_1`)
-
-It outputs a CSV with **frame id / gt / pred**.
+This script runs **frame-level phase prediction** on the video. It outputs a CSV with **frame id / gt / pred**.
 
 ### 1) Prepare files
 
@@ -41,11 +35,11 @@ Notes:
 
 ### 2) Prepare model checkpoints
 
-By default the script expects these paths (relative to `phase_recognition/TransSVNet/`):
+By default the script expects these paths:
 
-- `./Model/latest_model_36.pth` (embedding checkpoint)
-- `./Model/latest_model_8.pth` (TeCNO checkpoint)
-- `./Model/5.pth` (Transformer checkpoint)
+- `./model/embedding.pth` (embedding checkpoint)
+- `./model/TeCNO.pth` (TeCNO checkpoint)
+- `./model/TeCNO_Trans.pth` (Transformer checkpoint)
 
 If your checkpoints are elsewhere, pass them with arguments below.
 

@@ -185,9 +185,9 @@ class Transformer(nn.Module):
         return output
 
 test_label_save_path = './data/'
-TeCNO_best_model_path = "./Model/TeCNO.pth"
-TeCNO_Trans_best_model_path = "./Model/TeCNO_Trans.pth"
-embedding_model_path_default = "./Model/embedding.pth"
+TeCNO_best_model_path = "./model/TeCNO.pth"
+TeCNO_Trans_best_model_path = "./model/TeCNO_Trans.pth"
+embedding_model_path_default = "./model/embedding.pth"
 video_path = "./data/020.mp4"
 label_path = "./data/020.txt"
 
