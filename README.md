@@ -15,7 +15,7 @@ AI-powered robotic surgical system enabling single-surgeon hysterectomy operatio
 - Joystick controller
 
 **Software Stack:**
-- ROS Melodic / Python 3.8
+- ROS Melodic / Python 3.9
 - YOLOv5-OBB for oriented bounding box detection
 - OpenCV stereo vision
 - Real-time multi-tool tracking
@@ -51,6 +51,7 @@ AI-powered robotic surgical system enabling single-surgeon hysterectomy operatio
 # Create conda environment from yaml
 conda env create -f tool_tracking_module/tracking_env.yaml
 conda activate tracking_env
+# Install ros related packages
 pip install rospkg catkin_pkg
 ```
 
@@ -136,16 +137,13 @@ python match/yolo_track_multi_pure.py --weights runs/train/weights/best.pt --sou
 Surgical phase recognition classifies the current operative step in real time, adapted from [Trans-SVNet](https://github.com/xjgaocs/Trans-SVNet).
 
 **Model Setup:**
-1. Pretrained weights (`TeCNO.pth`, `TeCNO_Trans.pth`) are located in `surgical phase_module/model/`
+1. Pretrained weights (`TeCNO.pth`, `TeCNO_Trans.pth`) are located in `surgical_phase_module/model/`
 2. Download the [AutoLaparo dataset](https://autolaparo.github.io/) and prepare per-frame label files (see format below)
 
 **Run inference:**
 ```bash
-cd "surgical phase_module"
-python run.py \
-  --video_path ./data/020.mp4 \
-  --label_path ./data/020.txt \
-  --save_dir ./data/
+cd surgical_phase_module
+python run.py --video_path ./data/020.mp4 --label_path ./data/020.txt --save_dir ./data/
 ```
 
 **Integration:**
@@ -232,8 +230,6 @@ python train.py --data ./data/yolov5obb_inhouse_phantom.yaml --epochs 500 --batc
 ## 🐛 Troubleshooting
 
 **No /joint_states data:** Restart UR5 control box
-
-**CUDA out of memory:** Use `--device cpu` in tracking script
 
 **Camera swap:** Edit camera indices in stereo node
 
