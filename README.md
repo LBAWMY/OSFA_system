@@ -24,14 +24,26 @@ AI-powered robotic surgical system enabling single-surgeon hysterectomy operatio
 
 ## 🚀 Getting Started
 
-### Step 1 · Prerequisites
+### Step 1 · Prerequisites *(~50 min)*
 
-```bash
-# Required: ROS Melodic, Python 3.8+, CUDA 10.2+, MATLAB
-# Hardware: UR5 connected at 192.168.3.33
-```
+**Software Requirements:**
 
-### Step 2 · Installation
+| Dependency | Install |
+|---|---|
+| ROS Melodic | [wiki.ros.org/melodic/Installation](https://wiki.ros.org/melodic/Installation/Ubuntu) |
+| ROS cv-bridge | `sudo apt install ros-melodic-cv-bridge` |
+| UR5 ROS driver | [ur_modern_driver](https://github.com/ros-industrial/ur_modern_driver) — clone into `~/catkin_ws/src` and `catkin_make` |
+| Joystick driver | `sudo apt install ros-melodic-joy` |
+| PyTorch + CUDA | [pytorch.org/get-started](https://pytorch.org/get-started/locally/) |
+| OpenCV | [Build from source](https://docs.opencv.org/4.x/d7/d9f/tutorial_linux_install.html) — required for ROS Melodic + Python 3 compatibility |
+| MATLAB | Required for hand-eye calibration |
+
+**Hardware:**
+- UR5 robotic arm connected at `192.168.3.33`
+- Stereo laparoscope camera
+- USB joystick controller
+
+### Step 2 · Installation *(~30 min)*
 
 #### A. Tool Tracking Environment
 
@@ -58,7 +70,7 @@ pip install pyqt5 opencv-python numpy rospkg catkin_pkg keyboard
 sudo apt install ros-melodic-ur-modern-driver ros-melodic-joy
 ```
 
-### Step 3 · Calibration
+### Step 3 · Calibration *(~15 min)*
 
 **Stereo Camera:**
 1. Run camera node and stereo calibration in CLion
@@ -98,7 +110,7 @@ sudo python3 main.py
 
 ## 🤖 AI Subcomponents
 
-### Tool Tracking
+### Tool Tracking *(~10 min setup, ~50 sec inference for demo video clip001.avi)*
 
 The tool tracking pipeline uses YOLOv5-OBB (Oriented Bounding Box) for real-time multi-tool detection and stereo vision for 3D localization.
 
@@ -119,18 +131,28 @@ python match/yolo_track_multi_pure.py --weights runs/train/weights/best.pt --sou
 2. Update intrinsic/extrinsic parameters in `tool_tracking_module/depthtracker/yolo_final.py`
 3. Kalman filters (`KalmanFilter.py`, `KalmanFilter_multi.py`) smooth 3D position estimates
 
-### Phase Recognition
+### Phase Recognition *(~10 min setup, ~10 sec inference for demo video 020.mp4)*
 
-Surgical phase recognition classifies the current operative step in real time to enable context-aware automation.
+Surgical phase recognition classifies the current operative step in real time, adapted from [Trans-SVNet](https://github.com/xjgaocs/Trans-SVNet).
 
-**Setup:**
-1. Prepare phase-annotated video data with per-frame labels
-2. Train the phase recognition model on annotated surgical recordings
-3. Deploy the trained model alongside the tracking pipeline
+**Model Setup:**
+1. Pretrained weights (`TeCNO.pth`, `TeCNO_Trans.pth`) are located in `surgical phase_module/model/`
+2. Download the [AutoLaparo dataset](https://autolaparo.github.io/) and prepare per-frame label files (see format below)
+
+**Run inference:**
+```bash
+cd "surgical phase_module"
+python run.py \
+  --video_path ./data/020.mp4 \
+  --label_path ./data/020.txt \
+  --save_dir ./data/
+```
 
 **Integration:**
 - Phase predictions are published via ROS topics for downstream consumption by the control system
 - The controller adjusts instrument behavior (e.g., tool selection, motion constraints) based on the recognized phase
+
+📖 For detailed usage, label format, and arguments, see [surgical phase_module/README.md](surgical%20phase_module/README.md)
 
 ---
 
@@ -149,6 +171,16 @@ OSFA_system/
 │       ├── match/                  # Multi-tool tracking scripts
 │       ├── data/                   # Dataset configs & hyper-parameters
 │       └── runs/train/             # Trained model weights
+├── surgical phase_module/
+│   ├── run.py                      # Main training & evaluation entry point
+│   ├── transformer2_3_1.py         # Transformer-based phase model
+│   ├── tecno.py                    # TeCNO temporal CNN architecture
+│   ├── mstcn.py                    # MS-TCN temporal segmentation
+│   ├── trans_SV.py                 # Transformer with surgical video features
+│   ├── train_embedding.py          # Feature embedding training
+│   ├── generate_LFB.py             # Long-term feature bank generation
+│   ├── model/                      # Pretrained weights (TeCNO, TeCNO_Trans)
+│   └── data/                       # Sample videos & phase annotations
 ├── Robot_control_interface/
 │   ├── main.py                     # Main entry point (PyQt5 GUI)
 │   ├── Mainwindow_ROS_MultiTools.py  # Core controller & ROS integration
