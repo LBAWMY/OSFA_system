@@ -113,7 +113,7 @@ sudo python3 main.py
 
 ### Tool Tracking *(~10 min setup, ~50 sec inference for demo video clip001.avi)*
 
-The tool tracking pipeline uses YOLOv5-OBB (Oriented Bounding Box) for real-time multi-tool detection and stereo vision for 3D localization.
+The tool tracking pipeline uses YOLOv5-OBB (Oriented Bounding Box) for real-time multi-tool detection and stereo vision for 3D localization. Expected output can be seen on the [Project Page](https://lbawmy.github.io/osfa/).
 
 **Model Setup:**
 1. Trained model weights (`best.pt`) are located in `tool_tracking_module/yolov5_obb/runs/train/`
