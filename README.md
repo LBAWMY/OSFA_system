@@ -11,7 +11,7 @@ AI-powered robotic surgical system enabling single-surgeon hysterectomy operatio
 **Hardware:**
 - UR5 robotic arm with stereo laparoscope
 - Uterus manipulator (UDP control)
-- Multiple surgical tools (1-4)
+- Multiple surgical tools
 - Joystick controller
 
 **Software Stack:**
@@ -116,7 +116,7 @@ sudo python3 main.py
 The tool tracking pipeline uses YOLOv5-OBB (Oriented Bounding Box) for real-time multi-tool detection and stereo vision for 3D localization.
 
 **Model Setup:**
-1. Trained OBB weights (`best.pt`) are located in `tool_tracking_module/yolov5_obb/runs/train/`
+1. Trained model weights (`best.pt`) are located in `tool_tracking_module/yolov5_obb/runs/train/`
 2. Download the video assets from [Google Drive](https://drive.google.com/drive/folders/1EdWaH4jMvLIYsDY4C-Mk9EUMAoWp_L82?usp=drive_link) and place them in `tool_tracking_module/yolov5_obb/assets/`
 3. To train a custom model, see [Training Custom Models](#-training-custom-models) below
 
@@ -194,7 +194,7 @@ OSFA_system/
 
 ## 🔧 Training Custom Models
 
-**1. Download the dataset** from Zenodo and create the required folder structure:
+**1. Download the dataset** from [Zenodo](https://doi.org/10.5281/zenodo.18875389) and create the required folder structure:
 
 ```bash
 cd tool_tracking_module/yolov5_obb
