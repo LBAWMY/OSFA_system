@@ -187,7 +187,6 @@ if __name__ == '__main__':
                 ],
                 sources_cuda=[
                     'src/nms_rotated_cuda.cu',
-                    'src/poly_nms_cuda.cu',
                 ]),
         ],
         cmdclass={'build_ext': BuildExtension},

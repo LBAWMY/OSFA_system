@@ -1,0 +1,39 @@
+ninja_required_version = 1.3
+cxx = /usr/bin/g++
+nvcc = /home/curi/anaconda3/envs/yolov5_obb_topleft/bin/nvcc
+
+cflags = -march=x86-64-v2 -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/curi/anaconda3/envs/yolov5_obb_topleft/include -I/home/curi/anaconda3/envs/yolov5_obb_topleft/targets/x86_64-linux/include -L/home/curi/anaconda3/envs/yolov5_obb_topleft/targets/x86_64-linux/lib -L/home/curi/anaconda3/envs/yolov5_obb_topleft/targets/x86_64-linux/lib/stubs -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -isystem /home/curi/anaconda3/envs/yolov5_obb_topleft/include -I/home/curi/anaconda3/envs/yolov5_obb_topleft/targets/x86_64-linux/include -L/home/curi/anaconda3/envs/yolov5_obb_topleft/targets/x86_64-linux/lib -L/home/curi/anaconda3/envs/yolov5_obb_topleft/targets/x86_64-linux/lib/stubs -fPIC -DWITH_CUDA -I/home/curi/anaconda3/envs/yolov5_obb_topleft/lib/python3.10/site-packages/torch/include -I/home/curi/anaconda3/envs/yolov5_obb_topleft/lib/python3.10/site-packages/torch/include/torch/csrc/api/include -I/home/curi/anaconda3/envs/yolov5_obb_topleft/include -I/home/curi/anaconda3/envs/yolov5_obb_topleft/include/python3.10 -c
+post_cflags = -DTORCH_API_INCLUDE_EXTENSION_H -DTORCH_EXTENSION_NAME=nms_rotated_ext -std=c++17
+cuda_cflags = -DWITH_CUDA -I/home/curi/anaconda3/envs/yolov5_obb_topleft/lib/python3.10/site-packages/torch/include -I/home/curi/anaconda3/envs/yolov5_obb_topleft/lib/python3.10/site-packages/torch/include/torch/csrc/api/include -I/home/curi/anaconda3/envs/yolov5_obb_topleft/include -I/home/curi/anaconda3/envs/yolov5_obb_topleft/include/python3.10 -c
+cuda_post_cflags = -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr --compiler-options ''"'"'-fPIC'"'"'' -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -DTORCH_API_INCLUDE_EXTENSION_H -DTORCH_EXTENSION_NAME=nms_rotated_ext -gencode=arch=compute_120,code=sm_120 -ccbin /usr/bin/gcc -std=c++17
+cuda_dlink_post_cflags = 
+sycl_dlink_post_cflags = 
+ldflags = 
+
+rule compile
+  command = $cxx -MMD -MF $out.d $cflags -c $in -o $out $post_cflags
+  depfile = $out.d
+  deps = gcc
+
+rule cuda_compile
+  depfile = $out.d
+  deps = gcc
+  command = $nvcc -MD -MF $out.d $cuda_cflags -c $in -o $out $cuda_post_cflags
+
+
+
+
+
+
+
+build /home/curi/CUHK/Projects/OSFA_system/tool_tracking_module/yolov5_obb/utils/nms_rotated/build/temp.linux-x86_64-cpython-310/src/nms_rotated_cpu.o: compile /home/curi/CUHK/Projects/OSFA_system/tool_tracking_module/yolov5_obb/utils/nms_rotated/src/nms_rotated_cpu.cpp
+build /home/curi/CUHK/Projects/OSFA_system/tool_tracking_module/yolov5_obb/utils/nms_rotated/build/temp.linux-x86_64-cpython-310/src/nms_rotated_cuda.o: cuda_compile /home/curi/CUHK/Projects/OSFA_system/tool_tracking_module/yolov5_obb/utils/nms_rotated/src/nms_rotated_cuda.cu
+build /home/curi/CUHK/Projects/OSFA_system/tool_tracking_module/yolov5_obb/utils/nms_rotated/build/temp.linux-x86_64-cpython-310/src/nms_rotated_ext.o: compile /home/curi/CUHK/Projects/OSFA_system/tool_tracking_module/yolov5_obb/utils/nms_rotated/src/nms_rotated_ext.cpp
+
+
+
+
+
+
+
+

@@ -248,7 +248,7 @@ class Tracker(object):
                 x_rot = np.clip(x_rot, 0, 1919)
                 y_rot = np.sin(-obs_bbox[-1]) * (x_.ravel() - x_mid) + np.cos(-obs_bbox[-1]) * (y_.ravel() - y_mid) + y_mid
                 y_rot = np.clip(y_rot, 0, 1079)
-                overlap_mem = np.sum(self.bbox_area[y_rot.astype(np.int), x_rot.astype(np.int)] > 0.10) / y_rot.size
+                overlap_mem = np.sum(self.bbox_area[y_rot.astype(np.int64), x_rot.astype(np.int64)] > 0.10) / y_rot.size
 
                 print('overlap mem: ', overlap_mem, 'prob: ', obs[-1])
                 print('iou: ', iou_matrix[high_conf_index], 'dis_x: ', dis_x, 'dis_y:', dis_y)
@@ -336,7 +336,7 @@ class Tracker(object):
             x_rot = np.clip(x_rot, 0, 1919)
             y_rot = np.sin(-bbox[-1]) * (x_.ravel() - x_mid) + np.cos(-bbox[-1]) * (y_.ravel() - y_mid) + y_mid
             y_rot = np.clip(y_rot, 0, 1079)
-            self.bbox_area[y_rot.astype(np.int), x_rot.astype(np.int)] += 1
+            self.bbox_area[y_rot.astype(np.int64), x_rot.astype(np.int64)] += 1
             # self.bbox_area[int(bbox[1]):int(bbox[3]), int(bbox[0]):int(bbox[2])] += 1
 
 class Object(object):
