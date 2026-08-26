@@ -1,6 +1,6 @@
 # Real-time Multi-Instrument Motion Tracking Module
 
-This repository provides a multi-task oriented instrument network for instrument detection and long-term tracking in real-time.
+This repository provides a multi-task orientated instrument network for instrument detection and long-term tracking in real-time.
 
 ## Highlights
 
@@ -119,15 +119,16 @@ match/runs/detect/demo_test001/
 ### Demo result
 
 <video controls muted loop width="100%">
-  <source src="match/runs/detect/demo_test001/test001.avi" type="video/x-msvideo">
-  Your browser does not support embedded AVI playback. Use the download link below.
+  <source src="match/runs/detect/demo_test001/test001.mp4" type="video/mp4">
+  Your browser does not support embedded video playback. Use the download link below.
 </video>
 
-[Download the annotated demo result](match/runs/detect/demo_test001/test001.avi).
+[Download the annotated demo result](match/runs/detect/demo_test001/test001.mp4).
 
 | File | Description |
 | --- | --- |
 | `test001.avi` | Annotated video containing final tracked OBBs, trajectories, and stabilized corner markers. |
+| `test001.mp4` | Web-compatible H.264 version of the demo result for README preview. |
 | `test001.npz` | Per-frame tracked and raw top-left-label arrays. |
 
 The NPZ archive contains these arrays:
