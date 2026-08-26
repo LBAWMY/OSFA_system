@@ -1,17 +1,11 @@
-# YOLOv5-OBB Surgical Tool Tracking
+# Real-time Multi-Instrument Motion Tracking Module
 
-This repository provides a YOLOv5-based pipeline for detecting, tracking, and
-visualising rotated surgical tools in video. In addition to oriented bounding
-boxes (OBBs), the tracker estimates a stable top-left corner label for each
-tracked tool.
-
-The implementation is intended for research and engineering use. It is **not a
-clinical decision-support system** and has not been validated for clinical use.
+This repository provides a multi-task oriented instrument network for instrument detection and long-term tracking in real-time.
 
 ## Highlights
 
 - Rotated-object detection with a YOLOv5-OBB model.
-- Multi-object tracking with Kalman filters.
+- Long-term instrument motion tracking.
 - Per-tool trajectory rendering and stabilized top-left-corner markers.
 - Video and NumPy (`.npz`) outputs for downstream analysis.
 - A small, reproducible demo video and checkpoint layout.
@@ -121,6 +115,15 @@ For the command above, results are written to:
 ```text
 match/runs/detect/demo_test001/
 ```
+
+### Demo result
+
+<video controls muted loop width="100%">
+  <source src="match/runs/detect/demo_test001/test001.avi" type="video/x-msvideo">
+  Your browser does not support embedded AVI playback. Use the download link below.
+</video>
+
+[Download the annotated demo result](match/runs/detect/demo_test001/test001.avi).
 
 | File | Description |
 | --- | --- |
